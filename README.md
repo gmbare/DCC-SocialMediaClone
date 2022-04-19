@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SocialMedia_StarterCode-FullStack
 Starter code for Social Media with both front/backend and working authentication system for user registration, log in, and log out.
 
@@ -26,3 +27,6 @@ Starter code for Social Media with both front/backend and working authentication
 3. Inside of `src/context/AuthContext.js`, find the `BASE_URL` variable (line 11) and make sure the port number of the URL matches the port number you set up in your backend.
 
 
+=======
+# DCC-SocialMediaClone
+>>>>>>> 1f0693041ff8167f1366950aacd73bf98782cb0e
