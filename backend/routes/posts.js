@@ -4,8 +4,9 @@ const express = require("express");
 const router = express.Router();
 
 // POST new post
-router.post("/", async (req, res) => {
+router.post("/testMe", async (req, res) => {
     try {
+        return("Hallelujah")
         const { error } = validatePost(req.body);
         if (error) return res.status(400).send(error);
 
