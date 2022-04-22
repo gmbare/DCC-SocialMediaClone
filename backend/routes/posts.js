@@ -4,19 +4,19 @@ const express = require("express");
 const router = express.Router();
 
 // POST new post
-router.post("/:userId", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const { error } = validatePost(req.body);       
         if (error) return res.status(400).send(error);
         
-        let user = await User.findOne({ _id: req.params.userId });
-        if (user)
-        return res.status(400).send(`New post entered`);
+        // let user = await User.findById(req.params.userId);
+        // if (user)
+        // return res.status(400).send(`New post entered`);
            
-        let newPost = await new Post(req.body);     
-        user.posts.push(newPost);
-        await user.save();        
-        return res.status(201).send(user.posts);        
+        let newPost = await new Post(req.body);  
+        // user.posts.push(newPost);
+        await newPost.save();        
+        return res.status(201).send(newPost);        
     } catch (error) {
         return res.status(500).send(`Internal Server Error: ${error}`);
     }
