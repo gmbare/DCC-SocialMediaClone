@@ -28,7 +28,7 @@ userSchema.methods.generateAuthToken = function () {
     process.env.JWT_SECRET
   );
 };
-
+ 
 const validateUser = (user) => {
   const schema = Joi.object({
     name: Joi.string().min(5).max(50).required(),
@@ -52,3 +52,4 @@ module.exports.User = User;
 module.exports.userSchema = userSchema;
 module.exports.validateUser = validateUser;
 module.exports.validateLogin = validateLogin;
+
