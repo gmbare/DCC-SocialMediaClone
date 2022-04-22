@@ -1,19 +1,22 @@
-const { Post, Comment, Reply, postSchema, commentSchema, replySchema, validatePost, validateComment, validateReply } = require("../models/post");
-
+const { Post, postSchema, validatePost } = require("../models/post");
+const { User } = require("../models/user")
 const express = require("express");
 const router = express.Router();
 
 // POST new post
-router.post("/testMe", async (req, res) => {
+router.post("/:userId", async (req, res) => {
     try {
-        return("Hallelujah")
-        const { error } = validatePost(req.body);
+        const { error } = validatePost(req.body);       
         if (error) return res.status(400).send(error);
-
-        let newPost = await new Post(req.body);
-        await newPost.save();
-
-        return res.status(201).send(newPost);
+        
+        let user = await User.findOne({ _id: req.params.userId });
+        if (user)
+        return res.status(400).send(`New post entered`);
+           
+        let newPost = await new Post(req.body);     
+        user.posts.push(newPost);
+        await user.save();        
+        return res.status(201).send(user.posts);        
     } catch (error) {
         return res.status(500).send(`Internal Server Error: ${error}`);
     }
@@ -50,20 +53,7 @@ router.put("/:postId/dislikes", async (req, res) => {
 });
 
 //POST new comment
-router.put("/:postId/comments", async (req, res) => {
-    try {       
-        let post = await Post.findById(req.params.postId);        
-        if (!post) return res.
-            status(400)
-            .send(`Post does not exist!`)        
-        let newComment = await new Comment(req.body);        
-        post.comments.push(newComment);
-        post.save();        
-        return res.status(200).send(post);        
-    } catch (error) {
-        return res.status(500).send(`Internal Server Error: ${error}`);
-    }
-});
+
 
 //GET comments
 
