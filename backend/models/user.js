@@ -1,4 +1,4 @@
-const { postSchema } = require("./post"); 
+const { postSchema } = require("../models/post"); 
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true, minLength: 8, maxLength: 1024 },
   isAdmin: { type: Boolean, required: true },
-  posts: [{type:postSchema}],
+  posts: {type:[postSchema]},
 });
 
 userSchema.methods.generateAuthToken = function () {
