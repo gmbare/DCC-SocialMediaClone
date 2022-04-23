@@ -110,6 +110,12 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
       let user = await User.findById(req.params.ownerId);        
       if (!user) return res.status(400).send(`Owner does not exist!`) 
       user.friends.push(req.params.friendId);
+      let arr = user.pendingFriends;
+      for(let i = 0; i < arr.length; i++){
+        if (arr[i] === req.params.friendId){
+          arr.splice(i,1);
+        }
+      }
       await user.save();        
       return res.status(200).send(user);        
   } catch (error) {
