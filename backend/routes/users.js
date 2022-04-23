@@ -92,4 +92,29 @@ router.delete("/:userId", [auth, admin], async (req, res) => {
   }
 });
 
+router.put("/:ownerId/pendfriend/:friendId", async (req, res) => {
+  try {       
+      let user = await User.findById(req.params.ownerId);        
+      if (!user) return res.status(400).send(`User does not exist!`) 
+      console.log(req.params.friendId)
+      user.pendingFriends.push(req.params.friendId);
+      await user.save();        
+      return res.status(200).send(user);        
+  } catch (error) {
+      return res.status(500).send(`Internal Server Error: ${error}`);
+  }
+});
+
+router.put("/:ownerId/friend/:friendId", async (req, res) => {
+  try {       
+      let user = await User.findById(req.params.ownerId);        
+      if (!user) return res.status(400).send(`Owner does not exist!`) 
+      user.friends.push(req.params.friendId);
+      await user.save();        
+      return res.status(200).send(user);        
+  } catch (error) {
+      return res.status(500).send(`Internal Server Error: ${error}`);
+  }
+});
+
 module.exports = router;
