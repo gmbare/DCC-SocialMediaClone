@@ -7,12 +7,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
     try {
         const { error } = validatePost(req.body);       
-        if (error) return res.status(400).send(error);
-        
-        // let user = await User.findById(req.params.userId);
-        // if (user)
-        // return res.status(400).send(`New post entered`);
-           
+        if (error) return res.status(400).send(error);           
         let newPost = await new Post(req.body);  
         // user.posts.push(newPost);
         await newPost.save();        
@@ -22,8 +17,40 @@ router.post("/", async (req, res) => {
     }
 });
 
+//GET all friends posts
+router.get("/friendsPosts", async (req, res) => {
+    try {
+        for(i in req.body.friendList){
+            let friendsPosts = await Post.find({ownerId:req.body.friendList[i]})
+            return res.status(200).send(friendsPosts)
+        }
+    } catch (error) {
+        return res.status(500).send(`Internal Server Error: ${error}`);
+    }
+});
 
-//GET all posts
+//PUT STAR rating
+router.put("/:postId/stars/:stars", async (req, res) => {
+    try {       
+        let post = await Post.findById(req.params.postId);        
+        if (!post) return res.status(400).send(`Post does not exist!`) 
+        if (req.stars == 1){
+            post.star1++;
+        } else if (req.stars == 2){
+            post.star2++;
+        } else if (req.stars == 3){
+            post.star3++;
+        } else if (req.stars == 4){
+            post.star4++;
+        } else if (req.stars == 5){
+            post.star5++;
+        }        
+        await post.save();        
+        return res.status(200).send(post);        
+    } catch (error) {
+        return res.status(500).send(`Internal Server Error: ${error}`);
+    }
+});
 
 
 //PUT post (Add likes, dislikes, star rating)
