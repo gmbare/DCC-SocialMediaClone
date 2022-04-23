@@ -1,4 +1,5 @@
 const { User, validateLogin, validateUser } = require("../models/user");
+const { Post } = require("../models/post");
 
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
