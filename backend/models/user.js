@@ -2,6 +2,7 @@ const { postSchema } = require("../models/post");
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const { aboutSchema } = require("./aboutMe");
 
 const userSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 5, maxLength: 50 },
@@ -14,6 +15,7 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true, minLength: 8, maxLength: 1024 },
   isAdmin: { type: Boolean, required: true },
+  about: { type: aboutSchema },
   posts: {type:[postSchema]},
 });
 
@@ -28,7 +30,7 @@ userSchema.methods.generateAuthToken = function () {
     process.env.JWT_SECRET
   );
 };
-
+ 
 const validateUser = (user) => {
   const schema = Joi.object({
     name: Joi.string().min(5).max(50).required(),
@@ -52,3 +54,4 @@ module.exports.User = User;
 module.exports.userSchema = userSchema;
 module.exports.validateUser = validateUser;
 module.exports.validateLogin = validateLogin;
+
