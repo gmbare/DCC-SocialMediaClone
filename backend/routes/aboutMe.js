@@ -1,5 +1,5 @@
 const { User, validateLogin, validateUser } = require("../models/user");
-const {About, validateAbout} = require("../models/about")
+const {About, validateAbout} = require("../models/aboutMe")
 
 
 const express = require("express");
