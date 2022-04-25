@@ -62,7 +62,6 @@ router.put("/:postId/stars/:stars", async (req, res) => {
     }
 });
 
-
 //PUT post (Add likes, dislikes, star rating)
 router.put("/:postId/likes", async (req, res) => {
     try {       
@@ -89,13 +88,23 @@ router.put("/:postId/dislikes", async (req, res) => {
     }
 });
 
-//POST new comment
-
-
-//GET comments
-
-
-//PUT comment replies
+// DELETE User Post
+router.delete("/:userId/deletePost/:postId", async (req, res) => {
+    try {
+        await Post.deleteOne({ _id: req.params.postId }); 
+        
+      res.send("Deleted Post")
+      
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+    
+       
+        
 
 
 module.exports = router;
+
+
+
