@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
   isAdmin: { type: Boolean, required: true },
   about: { type: aboutSchema },
   posts: {type:[postSchema]},
-  friends:[{type:String}],
+  friends:{type:[]},
   pendingFriends:{type:[]},
 });
 
