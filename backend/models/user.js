@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 const { postSchema } = require("./post"); 
 const {aboutSchema} = require("./about")
+=======
+const { postSchema } = require("../models/post"); 
+>>>>>>> fd7fe75184905415a5b959d05608cc45c83772c0
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const { aboutSchema } = require("./aboutMe");
 
 const userSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 5, maxLength: 50 },
@@ -16,7 +21,13 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true, minLength: 8, maxLength: 1024 },
   isAdmin: { type: Boolean, required: true },
   about: { type: aboutSchema },
+<<<<<<< HEAD
   posts: [{type:postSchema}],
+=======
+  posts: {type:[postSchema]},
+  friends:{type:[]},
+  pendingFriends:{type:[]},
+>>>>>>> fd7fe75184905415a5b959d05608cc45c83772c0
 });
 
 userSchema.methods.generateAuthToken = function () {
