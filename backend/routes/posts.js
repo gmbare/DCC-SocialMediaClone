@@ -8,8 +8,7 @@ router.post("/", async (req, res) => {
     try {
         const { error } = validatePost(req.body);       
         if (error) return res.status(400).send(error);           
-        let newPost = await new Post(req.body);  
-        // user.posts.push(newPost);
+        let newPost = await new Post(req.body); 
         await newPost.save();        
         return res.status(201).send(newPost);        
     } catch (error) {
@@ -31,8 +30,8 @@ router.get("/:ownerId", async (req, res) => {
 //GET all friends' posts
 router.get("/friendsPosts", async (req, res) => {
     try {
-        for(i in req.body.friendList){
-            let friendsPosts = await Post.find({ownerId:req.body.friendList[i]})
+        for(i in req.body.friends){
+            let friendsPosts = await Post.find({ownerId:req.body.friends[i]})
             return res.status(200).send(friendsPosts)
         }
     } catch (error) {
@@ -63,7 +62,6 @@ router.put("/:postId/stars/:stars", async (req, res) => {
     }
 });
 
-
 //PUT post (Add likes, dislikes, star rating)
 router.put("/:postId/likes", async (req, res) => {
     try {       
@@ -90,13 +88,23 @@ router.put("/:postId/dislikes", async (req, res) => {
     }
 });
 
-//POST new comment
-
-
-//GET comments
-
-
-//PUT comment replies
+// DELETE User Post
+router.delete("/:userId/deletePost/:postId", async (req, res) => {
+    try {
+        await Post.deleteOne({ _id: req.params.postId }); 
+        
+      res.send("Deleted Post")
+      
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+    
+       
+        
 
 
 module.exports = router;
+
+
+
