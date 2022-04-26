@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import AuthContext from '../../context/AuthContext';
 
-export default function FriendsList({ user }) {
+export default function FriendsList() {
+    const { user } = useContext(AuthContext);
     const [friends, setFriends] = useState([]);
     const [followed, setFollowed] = useState([]);
 
 
 
-useEffect(() => {
     const getFriends = async () => {
         try{
-            const friendList = await axios.get("http://localhost:3008/api/users/625f78136c7c6c423cbf2604/friends");
-            setFriends(friendList.data);
-        } catch(err) {
-            console.log(err);
-        }
-    };
-    getFriends();
-})
-}
+                const friendList = await axios.get(`"http://localhost:3008/api/users/${user._id}/friends`);
+                setFriends(friendList.data);
+                console.log(friends)
+            } catch(err) {
+                console.log(err);
+            }
+        };
+
+    useEffect(() => {
+        getFriends();
+    },[])
+
+    return <h1 className="container">Home Page for {JSON.stringify(friends)}!</h1>;
+    }
+        
 
 
 
