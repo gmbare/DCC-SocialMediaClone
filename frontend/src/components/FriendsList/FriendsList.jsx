@@ -10,7 +10,7 @@ export default function FriendsList({ user }) {
 useEffect(() => {
     const getFriends = async () => {
         try{
-            const friendList = await axios.get("http://localhost:3008/api/users");
+            const friendList = await axios.get("http://localhost:3008/api/users/625f78136c7c6c423cbf2604/friends");
             setFriends(friendList.data);
         } catch(err) {
             console.log(err);

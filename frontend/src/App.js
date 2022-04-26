@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <Navbar />
-       {/* <FriendsList/> */}
+       <FriendsList/>
       <Routes>
         <Route
           path="/"

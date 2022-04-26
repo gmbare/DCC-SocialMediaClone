@@ -3,6 +3,7 @@ const connectDb = require("./db/db");
 const usersRouter = require("./routes/users");
 const aboutsRouter = require("./routes/aboutMe.js");
 const postsRouter = require("./routes/posts");
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(`/api/users`, usersRouter);
 app.use(`/api/abouts`, aboutsRouter);
 app.use(`/api/posts`, postsRouter);
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

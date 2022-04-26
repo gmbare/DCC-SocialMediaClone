@@ -93,7 +93,7 @@ router.delete("/:userId", [auth, admin], async (req, res) => {
 });
 
 // GET all friends
-router.get("/:userId/friends", [auth], async (req, res) => {
+router.get("/:userId/friends", async (req, res) => {
   try{
     const user = await User.findById(req.params.userId);
     if (!user)
@@ -106,7 +106,7 @@ router.get("/:userId/friends", [auth], async (req, res) => {
 });
 
 // GET all pendingFriends
-router.get("/:userId/pendingFriends", [auth], async (req, res) => {
+router.get("/:userId/pendingFriends", async (req, res) => {
   try{
     const user = await User.findById(req.params.userId);
     if (!user)
