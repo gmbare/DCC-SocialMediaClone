@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
   isAdmin: { type: Boolean, required: true },
   about: { type: aboutSchema },
   posts: {type:[postSchema]},
-  friends:[{type:String}],
+  friends:{type:[]},
   pendingFriends:{type:[]},
 });
 
@@ -28,6 +28,9 @@ userSchema.methods.generateAuthToken = function () {
       name: this.name,
       email: this.email,
       isAdmin: this.isAdmin,
+      friends: this.friends,
+      pendingFriends: this.pendingFriends,
+
     },
     process.env.JWT_SECRET
   );
