@@ -28,6 +28,9 @@ userSchema.methods.generateAuthToken = function () {
       name: this.name,
       email: this.email,
       isAdmin: this.isAdmin,
+      friends: this.friends,
+      pendingFriends: this.pendingFriends,
+
     },
     process.env.JWT_SECRET
   );
