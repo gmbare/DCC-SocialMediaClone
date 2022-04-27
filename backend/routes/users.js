@@ -30,6 +30,7 @@ fileUpload.single("image"),
       image: req.file.path
     });
 
+      
     await user.save();
     const token = user.generateAuthToken();
     return res
@@ -46,6 +47,7 @@ fileUpload.single("image"),
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
 });
+        
 
 // POST a valid login attempt
 // when a user logs in, a new JWT token is generated and sent if their email/password credentials are correct
@@ -123,32 +125,38 @@ router.get("/:userId/pendingFriends", async (req, res) => {
   }
 });
 
+
+// PUT a pending friend
 router.put("/:ownerId/pendfriend/:friendId", async (req, res) => {
   try {       
-      let user = await User.findById(req.params.ownerId);        
-      if (!user) return res.status(400).send(`User does not exist!`) 
+      let owner = await User.findById(req.params.ownerId); 
+      let friend = await User.findById(req.params.friendId);        
+      if (!owner) return res.status(400).send(`User does not exist!`) 
       console.log(req.params.friendId)
-      user.pendingFriends.push(req.params.friendId);
-      await user.save();        
-      return res.status(200).send(user);        
+      owner.pendingFriends.push(friend.name);
+      await owner.save();        
+      return res.status(200).send(owner);        
   } catch (error) {
       return res.status(500).send(`Internal Server Error: ${error}`);
   }
 });
 
+
+// PUT a new friend
 router.put("/:ownerId/friend/:friendId", async (req, res) => {
   try {       
-      let user = await User.findById(req.params.ownerId);        
-      if (!user) return res.status(400).send(`Owner does not exist!`) 
-      user.friends.push(req.params.friendId);
-      let arr = user.pendingFriends;
+      let owner = await User.findById(req.params.ownerId); 
+      let friend = await User.findById(req.params.friendId);        
+      if (!owner) return res.status(400).send(`Owner does not exist!`) 
+      owner.friends.push(friend.name);
+      let arr = owner.pendingFriends;
       for(let i = 0; i < arr.length; i++){
         if (arr[i] === req.params.friendId){
           arr.splice(i,1);
         }
       }
-      await user.save();        
-      return res.status(200).send(user);        
+      await owner.save();        
+      return res.status(200).send(owner);        
   } catch (error) {
       return res.status(500).send(`Internal Server Error: ${error}`);
   }
@@ -156,7 +164,7 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
 
 router.put("/:ownerId/removefriend/:friendId/list/:list", async (req, res) => {
   try {       
-      let user = await User.findById(req.params.ownerId);        
+      let user = await User.findById(req.params.ownerId);   
       if (!user) return res.status(400).send(`User does not exist!`) 
       let list = req.params.list
       if(list == "pending"){
@@ -180,6 +188,7 @@ router.put("/:ownerId/removefriend/:friendId/list/:list", async (req, res) => {
   } catch (error) {
       return res.status(500).send(`Internal Server Error: ${error}`);
   }
-});
+});    
+      
 
 module.exports = router;

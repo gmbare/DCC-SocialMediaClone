@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
   pendingFriends:{type:[]},
   image:{ type: String, default: "" },
 });
+  
 
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign(
@@ -32,11 +33,12 @@ userSchema.methods.generateAuthToken = function () {
       friends: this.friends,
       pendingFriends: this.pendingFriends,
       image: this.image, 
-
-    },
+},
     process.env.JWT_SECRET
   );
 };
+    
+      
  
 const validateUser = (user) => {
   const schema = Joi.object({
@@ -48,6 +50,7 @@ const validateUser = (user) => {
   });
   return schema.validate(user);
 };
+    
 
 const validateLogin = (req) => {
   const schema = Joi.object({
