@@ -42,9 +42,17 @@ export default function FriendsList() {
   }, []);
 
   return (
-    <div>
+    <div><h2>
+                Pending Friends 
+            </h2>
+            <ul className="list-group">
+          {pendingFriends.map((pendingFriend,index) => {
+            return  (
+            <li className="list-group-item" key={index}>{pendingFriend}</li>)
+          })}
+            </ul>
       <h2>
-        Friends List 
+        Friends 
       </h2>
       <div>
         <ul className="list-group">
@@ -54,15 +62,7 @@ export default function FriendsList() {
           })}
         </ul>
         <div>
-            <h2>
-                Pending Friends
-            </h2>
-            <ul className="list-group">
-          {pendingFriends.map((pendingFriend,index) => {
-            return  (
-            <li className="list-group-item" key={index}>{pendingFriend}</li>)
-          })}
-            </ul>
+            
         </div>
       </div>
     </div>
