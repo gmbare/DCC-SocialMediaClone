@@ -67,7 +67,7 @@ useEffect(() => {
   return (
     <div>
       <Navbar />
-       <FriendsList />
+     
       <Routes>
         <Route
           path="/"
