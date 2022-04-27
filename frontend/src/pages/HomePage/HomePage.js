@@ -11,8 +11,7 @@ const HomePage = () => {
     <div className="container d-flex">
       <MainFeed userId = {user._id} />
       <div className="w-25 m-2 border border-start">
-       <Friends />
-       <PendingFriends />
+       
       </div>
     </div>
   </div>)

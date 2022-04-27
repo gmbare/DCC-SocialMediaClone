@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import './MainFeed.css'
+import './MainFeed.css';
+import { FaStar } from 'react-icons/fa';
 
 function MainFeed(props){
     const [Post, setPost] = useState([]);
@@ -19,8 +20,16 @@ function MainFeed(props){
             {Post.map((posts) => {
           return (                         
               <div className="postholder p-2 mb-5 border border-warning" key={posts._id}>
-                <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
-                <div><p>{posts.message}</p></div>               
+                <div className="stars text-center">Rate this burger:</div>
+                <div className="starholder">
+                  <a className="star"><FaStar /></a>
+                  <a className="star"><FaStar /></a>
+                  <a className="star"><FaStar /></a>
+                  <a className="star"><FaStar /></a>
+                  <a className="star"><FaStar /></a>
+                </div>
+                <img src="../images/burger.jpg" alt={`image-${posts._id}`} />                
+                <div className="message"><p>{posts.message}</p><div className="currentrating">Rating: 5<FaStar className="icon" /></div></div>               
               </div>
             )
           })        
