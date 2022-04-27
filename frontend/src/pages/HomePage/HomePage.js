@@ -12,12 +12,7 @@ const HomePage = () => {
     <div className="container d-flex">
       <MainFeed userId = {user._id} />
       <div className="w-25 m-2 border border-start">
-<<<<<<< HEAD
-       {/* <Friends /> */}
-       {/* <PendingFriends /> */}
-=======
        <FriendsList userId = {user._id} />
->>>>>>> f1f38af3a6e1550930e26da1bf487971018a1444
       </div>
     </div>
   </div>)
