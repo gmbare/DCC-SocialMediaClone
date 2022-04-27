@@ -9,11 +9,12 @@ li {
 }
 
 .navBar {
-  background: steelblue;
+  background-image: linear-gradient(rgb(121, 41, 10), rgb(236, 183, 8));
   box-shadow: 4px 2px 5px gray;
   color: white;
-  margin-bottom: 2rem;
-  padding: 1.5rem 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem;
+  max-height: 5rem;
 }
 
 .navBar button {
@@ -33,3 +34,5 @@ li {
   cursor: pointer;
   font-size: 2rem;
 }
+
+.brand img{max-height:80%;}
