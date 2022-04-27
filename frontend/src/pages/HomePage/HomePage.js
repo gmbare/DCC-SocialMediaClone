@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import MainFeed from "../../components/HomePage/MainFeed/MainFeed"
+import FriendsList from "../../components/FriendsList/FriendsList";
 
 const HomePage = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const HomePage = () => {
     <div className="container d-flex">
       <MainFeed userId = {user._id} />
       <div className="w-25 m-2 border border-start">
-       
+       <FriendsList userId = {user._id} />
       </div>
     </div>
   </div>)

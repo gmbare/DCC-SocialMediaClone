@@ -3,13 +3,16 @@ const { Post } = require("../models/post");
 
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
+const fileUpload = require("../middleware/file-upload");
 
 const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 
-//* POST register a new user
-router.post("/register", async (req, res) => {
+//* POST register a new user and upload image via middleware
+router.post("/register",
+fileUpload.single("image"),
+ async (req, res) => {
   try {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -24,6 +27,7 @@ router.post("/register", async (req, res) => {
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, salt),
       isAdmin: req.body.isAdmin,
+      image: req.file.path
     });
 
     await user.save();
@@ -36,6 +40,7 @@ router.post("/register", async (req, res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        image: user.image,
       });
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
@@ -87,6 +92,32 @@ router.delete("/:userId", [auth, admin], async (req, res) => {
         .send(`User with id ${req.params.userId} does not exist!`);
     await user.remove();
     return res.send(user);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+// GET all friends
+router.get("/:userId/friends", async (req, res) => {
+  try{
+    const user = await User.findById(req.params.userId);
+    if (!user)
+    return res.status(400)
+    .send(`User with id ${req.params.userId} does not exist!`);
+    return res.send(user.friends);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+// GET all pendingFriends
+router.get("/:userId/pendingFriends", async (req, res) => {
+  try{
+    const user = await User.findById(req.params.userId);
+    if (!user)
+    return res.status(400)
+    .send(`User with id ${req.params.userId} does not exist!`);
+    return res.send(user.pendingFriends);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
