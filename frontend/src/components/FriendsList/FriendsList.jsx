@@ -8,18 +8,22 @@ import AuthContext from "../../context/AuthContext";
 const FriendsList = (props) => {
 
   const { user } = useContext(AuthContext);
-  // const { owner } = useContext(AuthContext);
   const [friends, setFriends] = useState([]);
+  const [friendsNames, setFriendsNames] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
-  // const [followed, setFollowed] = useState([]);
+  const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
+  const [followed, setFollowed] = useState([]);
+  
 
   const getFriends = async () => {
     try {
-      const friendList = await axios.get(
+      await axios.get(
         `http://localhost:3008/api/users/${user._id}/friends`
-      );
-      setFriends(friendList.data);
-      console.log(friends);
+      ).then( async (friendList) => {
+        setFriends(friendList.data)
+        const friendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`, {params: {"_ids" : friendList.data}})
+        setFriendsNames(friendListNames.data)
+      })
     } catch (err) {
       console.log(err);
     }
@@ -31,15 +35,23 @@ const FriendsList = (props) => {
 
   const getPendingFriends = async () => {
     try {
-      const pendingFriendList = await axios.get(
+      await axios.get(
         `http://localhost:3008/api/users/${user._id}/pendingFriends`
-      );
+      ).then( async (pendingFriendList) => {
       setPendingFriends(pendingFriendList.data);
-      console.log(pendingFriends);
+      const pendingfriendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`,  {params: {"_id":pendingFriendList.data}})
+      setPendingFriendsNames(pendingfriendListNames.data)
+      console.log(pendingfriendListNames);
+      })
     } catch (err) {
       console.log(err);
     }
   };
+
+
+const acceptFriend = async (e,friendId) => {
+  const acceptedFriend = await axios.put(`/${user.Id}/friend/${friendId}`)
+}
 
   useEffect(() => {
     getFriends();
@@ -47,15 +59,7 @@ const FriendsList = (props) => {
   }, []);
 
     
-//   async function addFriendButton (event) {
-//     event.preventDefault();
-    
-//     const put = {put: event.target.put.value};
-//     const url = `http://localhost:3011/api/users/${user._id}/newPost`;
-//     let res = await axios.put(`http://localhost:3011/api/users/${owner._id}/friend/${user._id}`); 
 
-//     console.log(res)
-// };
 
 
   
@@ -84,18 +88,17 @@ const FriendsList = (props) => {
       <div>
         
         <ul className="list-group">
-          {friends.map((friend,index) => {
+          {friendsNames.map((friend,index) => {
             return  (
-            < li className="list-group-item" key={index}>{friend} <button>Delete</button>  </li>
+            < li className="list-group-item" key={index}>{friend} <button>Add</button> <button>Deny</button>  </li>
            
             )
           })}
-        </ul>
-        <div>
-            
+       
+            </ul>
         </div>
       </div>
-    </div>
+    
     
   );
 }
