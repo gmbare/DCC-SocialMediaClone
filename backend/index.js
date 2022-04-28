@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(`/api/users`, usersRouter);
 app.use(`/api/abouts`, aboutsRouter);
 app.use(`/api/posts`, postsRouter);
+app.use(`/api/abouts`, aboutsRouter);
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 app.use ((error, req, res, next) => {
