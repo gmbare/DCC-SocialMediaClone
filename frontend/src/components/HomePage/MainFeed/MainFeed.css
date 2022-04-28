@@ -1,4 +1,4 @@
-.postholder{max-width:800px;position:relative;}
+.postholder,#addComment{max-width:98%;position:relative;}
 img {
     max-width:98%;
     height:98%;  

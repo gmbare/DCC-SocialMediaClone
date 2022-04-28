@@ -4,6 +4,6 @@
 .starholder a:hover{color:gold;}
 .currentrating{color:gold;font-size:1.5rem;font-weight:bold;position:absolute;top:-3.5rem;right:1rem;background-color: blue;padding:.5rem 1rem}
 .currentrating .icon {margin-top:-.25rem;}
-#stars input[type="radio"]{display:none;}
-#stars label{font-size:1.8rem;color:#fff}
-#stars label:hover{color:gold;}
+input[type="radio"]{display:none;}
+label{font-size:1.8rem;color:#fff}
+label:hover{color:gold;}

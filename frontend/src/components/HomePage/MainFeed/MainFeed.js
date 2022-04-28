@@ -3,6 +3,7 @@ import axios from 'axios';
 import './MainFeed.css';
 import { FaStar } from 'react-icons/fa';
 import Rating from "./Rating";
+import AddPost from "./AddPost";
 
 function MainFeed(props){
     const [Post, setPost] = useState([]);
@@ -16,8 +17,9 @@ function MainFeed(props){
     },[]);
 
     return(
-    <div className="w-75 p-0 m-2">        
+    <div className="w-75 p-0 m-2">                
         <div align="center">
+            <AddPost userId={props.userId} />
             {Post.map((posts) => {
                let totalStars = posts.star1 + (posts.star2*2) + (posts.star3*3) + (posts.star4*4) + (posts.star5*5);
                let numRatings = posts.star1 + posts.star2 + posts.star3 + posts.star4 + posts.star5;

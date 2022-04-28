@@ -8,17 +8,15 @@ const Rating = (props) => {
       event.preventDefault();
       let newRating = await axios.put(`http://localhost:3008/api/posts/${props.postId}/stars/${rating}`)
         props.getPosts();
-        document.getElementsByName('stars').disabled = true;
-      }      
-      useEffect(() => {
-        handleRating();
-        },[props.postId])  
+        //document.getElementsByName('stars').disabled = true;
+      }     
+       
       
     return ( 
         <div>        
           <div className="stars text-center">Rate this burger:</div>
           <div className="starholder">
-              <form id="stars">
+              <form id={`stars${props.postId}`}>
                 <label for="star-1"><FaStar /></label>
                   <input id="star-1" class="star" name="stars" type="radio" value="1" onChange={(event) => handleRating (event,1)} />
                 <label for="star-2"><FaStar /></label>
