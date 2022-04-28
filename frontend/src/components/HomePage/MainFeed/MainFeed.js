@@ -24,19 +24,22 @@ if (props.mFriends != null){
         <div align="center">
             <AddPost userId={props.userId} />
             {Post.map((posts, index) => {
-               let totalStars = posts.post.star1 + (posts.post.star2*2) + (posts.post.star3*3) + (posts.post.star4*4) + (posts.post.star5*5);
-               let numRatings = posts.post.star1 + posts.post.star2 + posts.post.star3 + posts.post.star4 + posts.post.star5;
-               let avgStars = totalStars / numRatings;
-               avgStars = parseFloat(avgStars).toFixed(2);
           return (
               <div className="postholder p-2 mb-5 border border-warning" key={index}>           
               {/* {console.log(posts)} */}
                 <p>{posts.name}</p>
                 {posts.post.map((entry) => {
+               let totalStars = entry.star1 + (entry.star2*2) + (entry.star3*3) + (entry.star4*4) + (entry.star5*5);
+               let numRatings = entry.star1 + entry.star2 + entry.star3 + entry.star4 + entry.star5;
+               let avgStars = totalStars / numRatings;
+               avgStars = parseFloat(avgStars).toFixed(2);
+               console.log(`${entry.message} STARS:${avgStars}`)
                   return(
                   <div>
+                  <Rating postId={entry._id} getPosts={getPosts} />
                   <img src="../images/burger.jpg" alt={`image-${entry._id}`} />
-                  <p >{entry.message}</p></div>  
+                  <div className="message"><p>{entry.message}</p><div className="currentrating">Rating: {avgStars}<FaStar className="icon" /></div></div>     
+                </div>  
                 )})}             
               </div>
             )
