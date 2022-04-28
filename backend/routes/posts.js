@@ -53,6 +53,8 @@ router.get("/:ownerId", async (req, res) => {
     }
 });
 
+
+
 //GET all friends' posts
 router.get("/", async (req, res) => {
     try {
@@ -97,6 +99,30 @@ router.put("/:postId/stars/:stars", async (req, res) => {
     } catch (error) {
         return res.status(500).send(`Internal Server Error: ${error}`);
     }
+});
+
+
+
+router.put("/:postId/stars/", async (req, res) => {
+  try {
+    // console.log(req.body)
+      let post = await Post.findById(req.params.postId);
+      if (!post) return res.status(400).send(`Post does not exist!`)
+      if (!post.stars.find(item => item.likerId === req.body.likerId)){
+        console.log("dangit")
+        post.stars.push({likerId:req.body.likerId, starRating:req.body.starRating})
+      }
+      else{
+        console.log("hello")
+        post.stars.find(item => {if (item.likerId === req.body.likerId) return item.starRating = req.body.starRating
+        })
+      }
+      await post.save()
+      console.log(post.stars)   
+      return res.status(200).send(post);        
+  } catch (error) {
+      return res.status(500).send(`${error}`);
+  }
 });
 
 //PUT post (Add likes, dislikes, star rating)

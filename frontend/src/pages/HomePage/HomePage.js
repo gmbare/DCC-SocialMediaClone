@@ -13,6 +13,7 @@ const HomePage = () => {
   <div className="container">
     <h1 className="text-left">Home Page for {user.name}</h1>
     <div className="container d-flex">
+
       <MainFeed userId = {user._id} mFriends={mFriends} />
       <div className="w-25 m-2 border border-start">
        <FriendsList userId={user._id} setMFriends={setMFriends}/>

@@ -32,7 +32,6 @@ const FriendsList = (props) => {
 
   const getPendingFriends = async () => {
     try {
-      console.log(user._id)
       await axios.get(
         `http://localhost:3008/api/users/${user._id}/pendingFriends`
       ).then( async (pendingFriendList) => {

@@ -1,4 +1,4 @@
-const { Post, postSchema, validatePost } = require("../models/post2");
+const { Post, postSchema, validatePost } = require("../models/postB");
 const { User } = require("../models/user")
 const express = require("express");
 const router = express.Router();
