@@ -14,7 +14,10 @@ function AddPost(props) {
           })
           console.log(newComment);
           setComment("");
-        }  
+          props.getPosts()
+        }
+
+
         useEffect(() => {
             handleSubmit();
         },[props.postId])   
