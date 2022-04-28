@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from 'axios';
 import './Rating.css';
 import { FaStar } from 'react-icons/fa';
@@ -8,7 +8,7 @@ const Rating = (props) => {
       event.preventDefault();
       let newRating = await axios.put(`http://localhost:3008/api/posts/${props.postId}/stars/${rating}`)
         props.getPosts();
-        console.log(`Likes: ${props.stars}`);
+        document.getElementsByName('stars').disabled = true;
       }      
       useEffect(() => {
         handleRating();
