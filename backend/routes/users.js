@@ -138,12 +138,10 @@ router.get("/namefromid", async (req, res) => {
     }
     const user = await iterate.map(async (id) => {
       let test = await User.findById(id);
-      // console.log(`Show Test: ${test}`)
       return test
     })
-    Promise.all(user).then((Test) => {
-      // console.log(`USer is Here: ${Test}`)
-      return res.send(Test.map((entry) => { return entry.name }));
+    Promise.all(user).then((userEntry) => {
+      return res.send(userEntry.map((entry) => { return entry.name }));
     })
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
@@ -153,14 +151,14 @@ router.get("/namefromid", async (req, res) => {
 // PUT a pending friend
 router.put("/:ownerId/pendfriend/:friendId", async (req, res) => {
   try {
-    let owner = await User.findById(req.params.ownerId);
+    let owner = await User.findById(req.params.friendId);
     if (!owner) return res.status(400).send(`User does not exist!`)
-    if (!owner.pendingFriends.includes(req.params.friendId) && !owner.friends.includes(req.params.friendId)) {
-      owner.pendingFriends.push(req.params.friendId);
+    if (!owner.pendingFriends.includes(req.params.ownerId) && !owner.friends.includes(req.params.ownerId)) {
+      owner.pendingFriends.push(req.params.ownerId);
       await owner.save();
       return res.status(200).send(owner);
     }
-    else if (owner.pendingFriends.includes(req.params.friendId) || owner.friends.includes(req.params.friendId)) {
+    else if (owner.pendingFriends.includes(req.params.ownerId) || owner.friends.includes(req.params.ownerId)) {
       return res.status(401).send(`You are already friends with this user`)
     }
   } catch (error) {
