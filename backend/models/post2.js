@@ -16,6 +16,7 @@ const postSchema = mongoose.Schema({
   message: { type: String, required: true, minLength:5, maxlength:1028 },
   ownerId: { type: String, required: true},
   image: {type: String},
+  stars:{'likerId':{type: String}, 'starRating':{type: Number}},
   star1: {type: Number,default: 0},
   star2: {type: Number,default: 0},
   star3: {type: Number,default: 0},
@@ -29,7 +30,7 @@ const postSchema = mongoose.Schema({
 
 function validatePost(post){
   const schema = Joi.object({
-      dateAdded: Joi.date(),
+    dateAdded: Joi.date(),
       message: Joi.string().min(5).max(1028).required(),
       image: Joi.string(),
       ownerId: Joi.string()                

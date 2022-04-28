@@ -14,6 +14,7 @@ function MainFeed(props){
             setPost(response.data);
         }
 
+    
 
     useEffect(() => {
         getPosts();
@@ -29,9 +30,21 @@ if (props.mFriends != null){
               {/* {console.log(posts)} */}
                 <p>{posts.name}</p>
                 {posts.post.map((entry) => {
-               let totalStars = entry.star1 + (entry.star2*2) + (entry.star3*3) + (entry.star4*4) + (entry.star5*5);
-               let numRatings = entry.star1 + entry.star2 + entry.star3 + entry.star4 + entry.star5;
-               let avgStars = totalStars / numRatings;
+                  let avgStars
+                  try{
+                  avgStars = ((function () {
+                    let total = 0
+                    for (let i in entry.stars){
+                      total += entry.stars[i].starRating
+                    }
+                    return (total/entry.stars.length)         
+                  })())
+                }catch{
+                  let totalStars = entry.star1 + (entry.star2*2) + (entry.star3*3) + (entry.star4*4) + (entry.star5*5);
+                  let numRatings = entry.star1 + entry.star2 + entry.star3 + entry.star4 + entry.star5;
+                  avgStars = totalStars / numRatings;
+                }
+               console.log(`${avgStars}`)
                avgStars = parseFloat(avgStars).toFixed(2);
                console.log(`${entry.message} STARS:${avgStars}`)
                   return(
