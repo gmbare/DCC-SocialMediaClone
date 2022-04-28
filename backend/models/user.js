@@ -1,4 +1,3 @@
-const {aboutSchema} = require("./about")
 const { postSchema } = require("../models/post"); 
 const mongoose = require("mongoose");
 const Joi = require("joi");
