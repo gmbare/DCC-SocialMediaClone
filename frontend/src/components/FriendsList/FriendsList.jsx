@@ -59,48 +59,52 @@ const FriendsList = (props) => {
     await getPendingFriends();
   }, []);
 
+  const denyFriend = async (e,index) => {
+    console.log(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
+    const deniedFriend = await axios.put(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
+    getFriends()
+    getPendingFriends()
+  }
+
+  useEffect(async () => {
+    await getFriends();
+    await getPendingFriends();
+  }, []);
+
     
 
 
 
-  
+return (
+  <div>
+    <h2>Pending Friends</h2>
+    <ul className="list-group">
+      {pendingFriendsNames.map((pendingFriend, index) => {
+        return (
+          <li className="list-group-item" key={index}>
+            {pendingFriend}
+            <button onClick={((e) => {acceptFriend(e, index)})}>A</button>
+            <button onClick={((e) => {denyFriend(e, index)})}>X</button>
+          </li>
+        );
+      })}
+    </ul>
 
-  return (
+    <h2>Friends List</h2>
     <div>
-      <h2>
-                Pending Friends 
-            </h2>
-            <ul  className="list-group">
-           
-          {pendingFriends.map((pendingFriend,index) => {
-            return  (
+      <ul className="list-group">
+        {friendsNames.map((friend, index) => {
+          return (
+            <li className="list-group-item" key={index}>
+              {friend}
               
-            <li className="list-group-item" key={index}>{pendingFriend} 
-           
             </li>
-            ) 
-          })}</ul>
-           
-            
-            <div>
-      <h3>
-        Friends 
-      </h3>
-      
-        
-        <ul className="list-group">
-          {friendsNames.map((friend, index) => {
-            return  (
-            <li className="list-group-item" key={index}>{friend}</li>)
-          })}
-        </ul>
-        
-          
-       </div>
-        </div>
-      
-    
-    
-  );
-}
+          );
+        })}
+      </ul>
+      <div></div>
+    </div>
+  </div>
+);
+};
 export default FriendsList;
