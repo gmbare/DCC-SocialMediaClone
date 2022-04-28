@@ -13,11 +13,12 @@ function AddPost(props) {
               "ownerId": props.userId
           })
           console.log(newComment);
+          props.getPosts();
           setComment("");
         }  
         useEffect(() => {
             handleSubmit();
-        },[props.postId])   
+        },[])   
    
     return (
         <div id="addComment">            
