@@ -78,23 +78,25 @@ const FriendsList = (props) => {
             <li className="list-group-item" key={index}>{pendingFriend} 
            
             </li>
-            )
-          })}
-            </ul>
-      <h2>
+            ) 
+          })}</ul>
+           
+            
+            <div>
+      <h3>
         Friends 
-      </h2>
+      </h3>
       
         
         <ul className="list-group">
-          {friendsNames.map((friend,index) => {
+          {friendsNames.map((friend, index) => {
             return  (
             <li className="list-group-item" key={index}>{friend}</li>)
           })}
         </ul>
         
           
-       
+       </div>
         </div>
       
     

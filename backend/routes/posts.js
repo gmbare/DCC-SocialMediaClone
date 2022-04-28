@@ -54,31 +54,42 @@ router.get("/:ownerId", async (req, res) => {
 });
 
 //GET all friends' posts
-router.get("/friendsPosts", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
-        for(i in req.body.friends){
-            let friendsPosts = await Post.find({ownerId:req.body.friends[i]})
-            return res.status(200).send(friendsPosts)
+        let friendPosts = await Post.find({ownerId:req.params.ownerId});
+        if (!friendPosts) return res.status(400).send("No posts yet! Why don't you add one?");
+        return res.status(200).send(friendPosts);
+        }catch (error) {
+            return res.status(500).send(`Internal Server Error: ${error}`);
+            }    
         }
-    } catch (error) {
-        return res.status(500).send(`Internal Server Error: ${error}`);
+    );
+router.get("/:ownerId/friends", async (req, res) => {
+    try{
+      const user = await User.findById(req.params.ownerId);
+      if (!user)
+      return res.status(400)
+      .send(`User with id ${req.params.userId} does not exist!`);
+      return res.send(user.friends);
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
     }
-});
+  });
 
 //PUT STAR rating
 router.put("/:postId/stars/:stars", async (req, res) => {
     try {       
         let post = await Post.findById(req.params.postId);        
         if (!post) return res.status(400).send(`Post does not exist!`) 
-        if (req.params.stars == 1){
+        if (req.params.stars == "1"){
             post.star1++;
-        } else if (req.params.stars == 2){
+        } else if (req.params.stars == "2"){
             post.star2++;
-        } else if (req.params.stars == 3){
+        } else if (req.params.stars == "3"){
             post.star3++;
-        } else if (req.params.stars == 4){
+        } else if (req.params.stars == "4"){
             post.star4++;
-        } else if (req.params.stars == 5){
+        } else if (req.params.stars == "5"){
             post.star5++;
         }        
         await post.save();        

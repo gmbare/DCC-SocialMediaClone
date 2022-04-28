@@ -1,38 +1,71 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import './MainFeed.css'
+import './MainFeed.css';
+import { FaStar } from 'react-icons/fa';
+import Rating from "./Rating";
+import AddPost from "./AddPost";
 
 function MainFeed(props){
     const [Post, setPost] = useState([]);
 
     async function getPosts () {
-        let response = await axios.get(`http://localhost:3008/api/posts/postsfromid`, {params:{_ids:props.mFriends}}) ;
-            // console.log(response.data);
-            setPost(response.data);
+      if (props.mFriends != null){
+        let response = await axios.get(`http://localhost:3008/api/posts/postsfromid`, {params:{_ids:[...props.mFriends, props.userId]}}) ;
+            setPost((function() {
+              let fullArray = []
+              response.data.map((entry => {return entry.post.map((splitEntry) => {return fullArray.push({"name":entry.name, "post":splitEntry})})}))
+            return((function() {
+              let sortArray = new Array(fullArray.length)
+              for (let i in fullArray){
+                let placement = 0
+                for (let x in fullArray){
+                  if (x == i){
+                  }
+                  else if (Date.parse(fullArray[i].post.dateAdded) < Date.parse(fullArray[x].post.dateAdded)){
+                    placement++
+                  }
+                  else if (Date.parse(fullArray[i].post.dateAdded) == Date.parse(fullArray[x].post.dateAdded)){
+                    placement++
+                  }
+                }
+                while (sortArray[placement] && (0 < placement || placement < 10)){
+                  placement--
+                }
+                sortArray[placement] = fullArray[i]
+              }
+              return sortArray})())
+          })());
         }
+      }
 
 
-    useEffect(() => {
+        useEffect(() => {
         getPosts();
     },[props.mFriends]);
+
 if (props.mFriends != null){
     return(
-    <div className="w-75 p-0 m-2">        
+    <div className="w-75 p-0 m-2">                
         <div align="center">
-            {Post.map((posts, index) => {
+            <AddPost userId={props.userId} getPosts={getPosts} />
+            {Post.map((posts) => {
+               let totalStars = posts.star1 + (posts.star2*2) + (posts.star3*3) + (posts.star4*4) + (posts.star5*5);
+               let numRatings = posts.star1 + posts.star2 + posts.star3 + posts.star4 + posts.star5;
+               let avgStars = totalStars / numRatings;
+               avgStars = parseFloat(avgStars).toFixed(2);
+               //  console.log(`${posts.message} STARS:${avgStars}`)
           return (
-              <div className="postholder p-2 mb-5 border border-warning" key={index}>           
+              <div className="postholder p-2 mb-5 border border-warning" key={posts._id}>           
               {/* {console.log(posts)} */}
-                <p>{posts.name}</p>
-                {posts.post.map((entry) => {
-                  return(
+              <p>{posts.name}</p> <p>{posts.post.dateAdded}</p> 
                   <div>
-                  <img src="../images/burger.jpg" alt={`image-${entry._id}`} />
-                  <p >{entry.message}</p></div>  
-                )})}             
+                  <Rating postId={posts._id} getPosts={getPosts} />
+                  <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
+                  <div className="message"><p>{posts.post.message}</p><div className="currentrating">Rating: {avgStars}<FaStar className="icon" /></div></div>     
+                </div>         
               </div>
             )
-          })        
+            })        
         }  
         </div>
     </div>
