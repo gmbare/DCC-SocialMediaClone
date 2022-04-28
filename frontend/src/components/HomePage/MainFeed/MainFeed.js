@@ -38,6 +38,7 @@ function MainFeed(props){
         }
       }
 
+    
 
         useEffect(() => {
         getPosts();
