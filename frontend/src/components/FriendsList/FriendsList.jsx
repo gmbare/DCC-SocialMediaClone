@@ -2,11 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
 
-export default function FriendsList() {
+
+
+
+const FriendsList = (props) => {
+
   const { user } = useContext(AuthContext);
+  // const { owner } = useContext(AuthContext);
   const [friends, setFriends] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
-  const [followed, setFollowed] = useState([]);
+  // const [followed, setFollowed] = useState([]);
 
   const getFriends = async () => {
     try {
@@ -41,24 +46,49 @@ export default function FriendsList() {
     getPendingFriends();
   }, []);
 
+    
+//   async function addFriendButton (event) {
+//     event.preventDefault();
+    
+//     const put = {put: event.target.put.value};
+//     const url = `http://localhost:3011/api/users/${user._id}/newPost`;
+//     let res = await axios.put(`http://localhost:3011/api/users/${owner._id}/friend/${user._id}`); 
+
+//     console.log(res)
+// };
+
+
+  
+
   return (
     <div><h2>
                 Pending Friends 
             </h2>
-            <ul className="list-group">
+            <ul  className="list-group">
+            {/* <ul onSubmit={addFriendButton} className="list-group"> */}
           {pendingFriends.map((pendingFriend,index) => {
             return  (
-            <li className="list-group-item" key={index}>{pendingFriend}</li>)
+              
+            <li className="list-group-item" key={index}>{pendingFriend} 
+            {/* <form onSubmit={(e) => props.handleAddFriend(e, props.index)}>
+              <input type="hidden" value={pendingFriend} />
+              <input type="submit" value="Add" />
+            </form>   */}
+            </li>
+            )
           })}
             </ul>
       <h2>
         Friends 
       </h2>
       <div>
+        
         <ul className="list-group">
           {friends.map((friend,index) => {
             return  (
-            <li className="list-group-item" key={index}>{friend}</li>)
+            < li className="list-group-item" key={index}>{friend} <button>Delete</button>  </li>
+           
+            )
           })}
         </ul>
         <div>
@@ -69,3 +99,11 @@ export default function FriendsList() {
     
   );
 }
+
+
+ 
+export default FriendsList;
+
+
+
+  
