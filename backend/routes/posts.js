@@ -4,24 +4,13 @@ const express = require("express");
 const router = express.Router();
 
 // POST new post
-router.post("/testMe", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-<<<<<<< HEAD
-        return("Hallelujah")
-        const { error } = validatePost(req.body);
-        if (error) return res.status(400).send(error);
-
-        let newPost = await new Post(req.body);
-        await newPost.save();
-
-        return res.status(201).send(newPost);
-=======
         const { error } = validatePost(req.body);       
         if (error) return res.status(400).send(error);           
         let newPost = await new Post(req.body); 
         await newPost.save();        
-        return res.status(201).send(newPost);        
->>>>>>> fd7fe75184905415a5b959d05608cc45c83772c0
+        return res.status(201).send(newPost);
     } catch (error) {
         return res.status(500).send(`Internal Server Error: ${error}`);
     }
