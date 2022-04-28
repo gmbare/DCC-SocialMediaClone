@@ -29,11 +29,7 @@ const postSchema = mongoose.Schema({
 
 function validatePost(post){
   const schema = Joi.object({
-<<<<<<< HEAD
-    dateAdded: Joi.date(),
-=======
       dateAdded: Joi.date(),
->>>>>>> GaryV
       message: Joi.string().min(5).max(1028).required(),
       image: Joi.string(),
       ownerId: Joi.string()                
