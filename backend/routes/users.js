@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
 // Get all users
 router.get("/", [auth], async (req, res) => {
   try {
-    console.log(req.user);
+    // console.log(req.user);
     const users = await User.find();
     return res.send(users);
   } catch (ex) {
@@ -174,7 +174,7 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
     if (!owner) return res.status(400).send(`Owner does not exist!`)
     let friend = await User.findById(req.params.friendId)
     if (!friend) return res.status(400).send(`Friend does not exist!`)
-    console.log(friend.name)
+    // console.log(friend.name)
     if (!owner.friends.includes(req.params.friendId)) {
       owner.friends.push(req.params.friendId);
       friend.friends.push(req.params.ownerId);
