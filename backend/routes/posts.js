@@ -16,6 +16,32 @@ router.post("/", async (req, res) => {
     }
 });
 
+
+//GET posts by ID sent in block
+router.get("/postsfromid", async (req, res) => {
+    // console.log(req.query)
+    try {
+      let iterate = []
+      if (req.body._ids) {
+        iterate = req.body._ids
+      }
+      else if (req.query._ids) {
+        iterate = req.query._ids
+      }
+      const user = await iterate.map(async (id) => {
+        let post = await Post.find({ownerId:id});
+        let user = await User.findById(id);
+        return {"name":user.name,"post":post}
+      })
+      Promise.all(user).then((userEntry) => {
+        return res.send(userEntry.map((entry) => { return entry}));
+      })
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+  });
+
+
 //GET all owner's posts
 router.get("/:ownerId", async (req, res) => {
     try {

@@ -4,12 +4,18 @@ import './Rating.css';
 import { FaStar } from 'react-icons/fa';
 
 const Rating = (props) => {
-    async function handleRating(event,rating){
+
+  const alterStarRating = async (rating) => {
+      await axios.put(`http://localhost:3008/api/posts/${props.postId}/stars/${rating}`)
+      props.getPosts();
+  }
+
+    function handleRating(event, rating){
       event.preventDefault();
-      let newRating = await axios.put(`http://localhost:3008/api/posts/${props.postId}/stars/${rating}`)
-        props.getPosts();
-        //document.getElementsByName('stars').disabled = true;
-      }            
+      alterStarRating(rating)
+      }     
+
+       
       
     return ( 
         <div>        
