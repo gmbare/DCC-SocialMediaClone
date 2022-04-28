@@ -9,6 +9,7 @@ function MainFeed(props){
     const [Post, setPost] = useState([]);
 
     async function getPosts () {
+      if (props.mFriends != null){
         let response = await axios.get(`http://localhost:3008/api/posts/postsfromid`, {params:{_ids:[...props.mFriends, props.userId]}}) ;
             setPost((function() {
               let fullArray = []
@@ -35,6 +36,7 @@ function MainFeed(props){
               return sortArray})())
           })());
         }
+      }
 
 
         useEffect(() => {
@@ -55,7 +57,7 @@ if (props.mFriends != null){
           return (
               <div className="postholder p-2 mb-5 border border-warning" key={index}>           
               {/* {console.log(posts)} */}
-                <p>{posts.name}</p> 
+              <p>{posts.name}</p> <p>{posts.post.dateAdded}</p> 
                   <div>
                   <Rating postId={posts._id} getPosts={getPosts} />
                   <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
