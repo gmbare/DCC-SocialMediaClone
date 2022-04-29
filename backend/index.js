@@ -3,7 +3,6 @@ const connectDb = require("./db/db");
 const usersRouter = require("./routes/users");
 const aboutsRouter = require("./routes/aboutMe.js");
 const postsRouter = require("./routes/posts");
-// const postsRouter = require("./routes/postsB");
 
 const fs = require('fs');
 const path = require('path');

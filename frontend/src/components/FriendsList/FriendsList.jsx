@@ -38,7 +38,7 @@ const FriendsList = (props) => {
       setPendingFriends(pendingFriendList.data);
       const pendingfriendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`,  {params: {"_ids":pendingFriendList.data}})
       setPendingFriendsNames(pendingfriendListNames.data)
-      console.log(pendingfriendListNames);
+      // console.log(pendingfriendListNames);
       })
     } catch (err) {
       console.log(err);

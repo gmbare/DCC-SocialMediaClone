@@ -79,41 +79,40 @@ router.get("/:ownerId/friends", async (req, res) => {
   });
 
 //PUT STAR rating
-router.put("/:postId/stars/:stars", async (req, res) => {
-    try {       
-        let post = await Post.findById(req.params.postId);        
-        if (!post) return res.status(400).send(`Post does not exist!`) 
-        if (req.params.stars == "1"){
-            post.star1++;
-        } else if (req.params.stars == "2"){
-            post.star2++;
-        } else if (req.params.stars == "3"){
-            post.star3++;
-        } else if (req.params.stars == "4"){
-            post.star4++;
-        } else if (req.params.stars == "5"){
-            post.star5++;
-        }        
-        await post.save();        
-        return res.status(200).send(post);        
-    } catch (error) {
-        return res.status(500).send(`Internal Server Error: ${error}`);
-    }
-});
+
+
+// router.put("/:postId/stars/:stars", async (req, res) => {
+//     try {       
+//         let post = await Post.findById(req.params.postId);        
+//         if (!post) return res.status(400).send(`Post does not exist!`) 
+//         if (req.params.stars == "1"){
+//             post.star1++;
+//         } else if (req.params.stars == "2"){
+//             post.star2++;
+//         } else if (req.params.stars == "3"){
+//             post.star3++;
+//         } else if (req.params.stars == "4"){
+//             post.star4++;
+//         } else if (req.params.stars == "5"){
+//             post.star5++;
+//         }        
+//         await post.save();        
+//         return res.status(200).send(post);        
+//     } catch (error) {
+//         return res.status(500).send(`Internal Server Error: ${error}`);
+//     }
+// });
 
 
 
 router.put("/:postId/stars/", async (req, res) => {
   try {
-    // console.log(req.body)
       let post = await Post.findById(req.params.postId);
       if (!post) return res.status(400).send(`Post does not exist!`)
       if (!post.stars.find(item => item.likerId === req.body.likerId)){
-        console.log("dangit")
         post.stars.push({likerId:req.body.likerId, starRating:req.body.starRating})
       }
       else{
-        console.log("hello")
         post.stars.find(item => {if (item.likerId === req.body.likerId) return item.starRating = req.body.starRating
         })
       }
