@@ -126,7 +126,7 @@ router.get("/:userId/pendingFriends", async (req, res) => {
 });
 
 
-// GET all pendingFriends
+// GET all pendingFriends Name
 router.get("/namefromid", async (req, res) => {
   try {
     let iterate = []
@@ -195,6 +195,8 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
     return res.status(500).send(`Internal Server Error: ${error}`);
   }
 });
+
+
 
 router.put("/:ownerId/removefriend/:friendId/list/:list", async (req, res) => {
   try {
