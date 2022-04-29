@@ -5,6 +5,7 @@ import './Rating.css'
 import { FaStar } from 'react-icons/fa';
 import Rating from "./Rating";
 import AddPost from "./AddPost";
+import DeletePost from "./DeletePost";
 
 function MainFeed(props) {
   const [Post, setPost] = useState([]);
@@ -92,13 +93,20 @@ function MainFeed(props) {
                 })()).toFixed(2)
             return (
               <div className="postholder p-2 mb-5 border border-warning" key={index}>
-                <p>{posts.name}</p> <p>{posts.post.dateAdded}</p>
+                <div className="d-flex justify-content-between mb-0">
+                  <p className="me-5 mb-0">{posts.name}</p> 
+                  <p className="ms-5 mb-0">{posts.post.dateAdded}</p>
+                  <DeletePost postId = {posts.post._id} ownerId = {posts.post.ownerId} userId={props.userId} getPosts={getPosts} />
+                </div>
+                
                 <div>
-                  <Rating postId={posts.post._id} userId={props.userId} getPosts={getPosts} />
+                  <Rating postId={posts.post._id} userId={props.userId} getPosts={getPosts} />                 
                   <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
-                  <div className="message"><p>{posts.post.message}</p><div className="currentrating">Rating: {avgStars}<FaStar className="icon" />
+                  <div className="message">
+                      <p>{posts.post.message}</p>
+                      <div className="currentrating">Overall Rating: {avgStars}<FaStar className="icon" /></div>
                   </div>
-                  </div>
+                  
                 </div>
               </div>
             )

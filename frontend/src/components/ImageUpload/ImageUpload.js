@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect} from "react";
 
 const ImageUpload = (props) => {
-    const [previewURL, setPreviewURL] = useState();
+    //const [previewURL, setPreviewURL] = useState();
     const [isValid, setIsValid] = useState(false);
 
     const filePickerRef = useRef();
@@ -11,9 +11,9 @@ const ImageUpload = (props) => {
             return;
         }
         const fileReader = new FileReader();
-        fileReader.onload = () => {
-            setPreviewUrl(fileReader.result);
-        };
+        //fileReader.onload = () => {
+        //    setPreviewUrl(fileReader.result);
+        //};
         fileReader.readAsDataURL(props.file);
     }, [props.file]);
 
@@ -35,7 +35,7 @@ const ImageUpload = (props) => {
     return (
 
         <div className="form-control">
-            <input id={props.id} ref={filePickerRef} style={{display:"none"}} type="file" accept=".jpg, .png, .jpeg" onChange={pickedHandler} />
+            <input id={props.id} ref={filePickerRef} type="file" accept=".jpg, .png, .jpeg" onChange={pickedHandler} />
             <div className={`image-upload ${props.center && "center"}`}>
             </div>
             {!isValid && <p>{props.errorText}</p>}
