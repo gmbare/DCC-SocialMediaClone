@@ -40,6 +40,7 @@ function AddAbouts(props) {
             value="Submit"
             onClick={(event) => {
               handleSubmit(event);
+              alert("About me saved!");
             }}
           />
         </div>

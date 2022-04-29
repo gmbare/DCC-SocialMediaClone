@@ -4,11 +4,9 @@ import AuthContext from "../../context/AuthContext";
 
 const FriendsList = (props) => {
   const { user } = useContext(AuthContext);
-  const [friends, setFriends] = useState([]);
   const [friendsNames, setFriendsNames] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
-  const [followed, setFollowed] = useState([]);
   
 
 
@@ -17,7 +15,6 @@ const FriendsList = (props) => {
       await axios.get(
         `http://localhost:3008/api/users/${user._id}/friends`
       ).then( async (friendList) => {
-        setFriends(friendList.data)
         props.setMFriends(friendList.data)
         const friendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`, {params: {"_ids" : friendList.data}})
         setFriendsNames(friendListNames.data)
@@ -33,14 +30,13 @@ const FriendsList = (props) => {
 
   const getPendingFriends = async () => {
     try {
-      console.log(user._id)
       await axios.get(
         `http://localhost:3008/api/users/${user._id}/pendingFriends`
       ).then( async (pendingFriendList) => {
       setPendingFriends(pendingFriendList.data);
       const pendingfriendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`,  {params: {"_ids":pendingFriendList.data}})
       setPendingFriendsNames(pendingfriendListNames.data)
-      console.log(pendingfriendListNames);
+      // console.log(pendingfriendListNames);
       })
     } catch (err) {
       console.log(err);
@@ -64,14 +60,7 @@ const FriendsList = (props) => {
     const deniedFriend = await axios.put(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
     getFriends()
     getPendingFriends()
-  }
-
-  useEffect(async () => {
-    await getFriends();
-    await getPendingFriends();
-  }, []);
-
-    
+  }   
 
 
 

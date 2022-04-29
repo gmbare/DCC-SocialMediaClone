@@ -10,7 +10,7 @@ const { aboutMeSchema } = require("../models/aboutMe");
 
 
 
-
+// POST about me
 router.post("/:userId", async (req, res) => {
     try {
         console.log(req.body)
@@ -33,6 +33,33 @@ router.post("/:userId", async (req, res) => {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 });
+
+
+
+// GET user About me
+router.get("/:userId", async (req, res) => {
+    try {
+        console.log(req.body)
+        let {error} = validateAbout(req.body);
+        if (error) return res.status(400).send(`Your About me status had the following errors: ${error}`)
+
+        const user = await User.findById(req.params.userId);
+        if (!user)
+        return res
+        .status(400)
+        .send(`User with id ${req.params.userId} does not exist!`);
+
+        const newAboutMe = await About(req.body);
+        user.about = newAboutMe
+
+        
+            return res.status(201).send(user);
+        
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 
 
 module.exports = router;
