@@ -1,0 +1,9 @@
+.friendslist-placement{
+    z-index:0;
+
+}
+
+.absolute{
+    position:static;
+    z-index:1
+}

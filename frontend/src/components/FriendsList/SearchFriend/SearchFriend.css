@@ -1,0 +1,20 @@
+.visible{
+    visibility: visible;
+    z-index:1;
+}
+.invisible{
+    visibility: hidden;
+    z-index:1;
+}
+
+.placement{
+    width:100%;
+    /* background-color: white; */
+    position: absolute;
+    z-index: 1;
+}
+
+.buttonWidth{
+    background-color: white;
+width:10rem;
+}
