@@ -15,7 +15,7 @@ router.post("/:userId", async (req, res) => {
     try {
         console.log(req.body)
         let {error} = validateAbout(req.body);
-        if (error) return res.status(400).send(`Your About me status had the following errors: ${error}`)
+        if (error) return res.status(400).send(`Your About Me status had the following errors: ${error}`)
 
         const user = await User.findById(req.params.userId);
         if (!user)
@@ -33,7 +33,6 @@ router.post("/:userId", async (req, res) => {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 });
-
 
 module.exports = router;
       
