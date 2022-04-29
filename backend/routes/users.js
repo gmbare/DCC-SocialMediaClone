@@ -126,7 +126,7 @@ router.get("/:userId/pendingFriends", async (req, res) => {
 });
 
 
-// GET all pendingFriends
+// GET all pendingFriends Name
 router.get("/namefromid", async (req, res) => {
   try {
     let iterate = []
