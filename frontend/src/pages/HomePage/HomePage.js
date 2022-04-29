@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   const { user } = useContext(AuthContext);
   const [mFriends, setMFriends] = useState();
-  // const [mFriends, setMFriends] = useState({user:'',post:['']})
 
   return (
     <div className="container">

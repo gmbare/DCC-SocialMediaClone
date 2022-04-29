@@ -7,3 +7,10 @@
 input[type="radio"]{display:none;}
 label{font-size:1.8rem;color:#fff}
 label:hover{color:gold;}
+
+.Highlighted{
+    color: gold;
+}
+.unHighlighted{
+    color: rgb(255, 255, 255);
+}
