@@ -13,16 +13,10 @@ function AddPost(props) {
               "image": "images/burger.jpg",
               "ownerId": props.userId
           })
-          console.log(newComment);
           props.getPosts();
           setComment("");
           props.getPosts()
         }
-
-
-        useEffect(() => {
-            handleSubmit();
-        },[])   
    
     return (
         <div id="addComment">            
