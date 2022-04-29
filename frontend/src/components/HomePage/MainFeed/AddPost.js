@@ -8,16 +8,21 @@ function AddPost(props) {
       async function handleSubmit (event) {
           event.preventDefault();          
         let newComment = await axios.post(`http://localhost:3008/api/posts/`, { 
+            "dateAdded": Date.now(),
               "message": Comment,
               "image": "images/burger.jpg",
               "ownerId": props.userId
           })
           console.log(newComment);
+          props.getPosts();
           setComment("");
-        }  
+          props.getPosts()
+        }
+
+
         useEffect(() => {
             handleSubmit();
-        },[props.postId])   
+        },[])   
    
     return (
         <div id="addComment">            
