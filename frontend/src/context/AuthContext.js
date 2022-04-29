@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => decodedToken);
   const [isServerError, setIsServerError] = useState(false);
   const navigate = useNavigate();
+  
 
   const registerUser = async (registerData) => {
     try {
@@ -68,3 +69,5 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 };
+
+    
