@@ -1,12 +1,19 @@
 const { User, validateLogin, validateUser } = require("../models/user");
 const {About, validateAbout} = require("../models/aboutMe")
 
-
 const express = require("express");
 const router = express.Router();
 
+const { commentSchema } = require("../models/post");
+const { aboutMeSchema } = require("../models/aboutMe");
+
+
+
+
+
 router.post("/:userId", async (req, res) => {
     try {
+        console.log(req.body)
         let {error} = validateAbout(req.body);
         if (error) return res.status(400).send(`Your About me status had the following errors: ${error}`)
 
