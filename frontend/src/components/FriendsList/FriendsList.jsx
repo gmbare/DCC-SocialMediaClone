@@ -9,7 +9,8 @@ const FriendsList = (props) => {
   const [friendsNames, setFriendsNames] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
-  
+  const [friendsPicture, setFriendsPictures] = useState([`uploads\\images\\burger.jpg`, `uploads\\images\\burger.jpg`]);
+  const [pendingFriendsPictures, setPendingFriendsPictures] = useState([`uploads\\images\\burger.jpg`]);
 
 
   const getFriends = async () => {
@@ -20,6 +21,8 @@ const FriendsList = (props) => {
         props.setMFriends(friendList.data)
         const friendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`, {params: {"_ids" : friendList.data}})
         setFriendsNames(friendListNames.data)
+        const pictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : friendList.data}})
+        setFriendsPictures(pictureFrames.data)
       })
     } catch (err) {
       console.log(err);
@@ -34,6 +37,9 @@ const FriendsList = (props) => {
       setPendingFriends(pendingFriendList.data);
       const pendingfriendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`,  {params: {"_ids":pendingFriendList.data}})
       setPendingFriendsNames(pendingfriendListNames.data)
+      const pendingPictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : pendingFriendList.data}})
+      // console.log(pendingPictureFrames.data)
+      setPendingFriendsPictures(pendingPictureFrames.data)
       // console.log(pendingfriendListNames);
       })
     } catch (err) {
@@ -69,32 +75,37 @@ return (
     <SearchFriend userId={user._id} getPendingFriends={getPendingFriends}/>
   </div>
   <div className="friendslist-placement">
-    <h2>Pending Friends</h2>
-    <ul className="list-group">
-      {pendingFriendsNames.map((pendingFriend, index) => {
-        return (
-          <li className="list-group-item" key={index}>
-            {pendingFriend}
-            <button onClick={((e) => {acceptFriend(e, index)})}>A</button>
-            <button onClick={((e) => {denyFriend(e, index)})}>X</button>
-          </li>
-        );
-      })}
-    </ul>
-
-    <h2>Friends List</h2>
-    <div>
-      <ul className="list-group">
-        {friendsNames.map((friend, index) => {
+    <div className="mb-3 border-bottom border-danger p-5">
+      <h3>Pending Friends</h3>
+      <ul className="list-group list-group-flush text-start">
+        {pendingFriendsNames.map((pendingFriend, index) => {
           return (
             <li className="list-group-item" key={index}>
-              {friend}
-              
+              {pendingFriend}
+              <button onClick={((e) => {acceptFriend(e, index)})}>A</button>
+              <button onClick={((e) => {denyFriend(e, index)})}>X</button>
             </li>
-          );
-        })}
+          )
+        })
+        }
       </ul>
-      <div></div>
+    </div>
+    <div className="mb-3 border-bottom border-danger">
+      <h3>Friends List</h3>
+      <div>
+        <ul className="list-group list-group-flush text-start">
+          {friendsNames.map((friend, index) => {
+            return (
+              <li className="list-group-item" key={index}>
+              <img src={`http://localhost:3008/backend/${friendsPicture[index]}`}/>  
+                {friend}
+                
+              </li>
+            );
+          })}
+        </ul>
+        <div></div>
+        </div>
     </div>
   </div>
   </div>

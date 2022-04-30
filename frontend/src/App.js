@@ -53,21 +53,20 @@ const loginUser = async () => {
     setUser(user);
     })
     .catch((error) => console.log(error));
-  
 };
+
 
 const logoutuser = async () => {
 
 };
 
 useEffect(() => {
-
 }, []);
     
   return (
     <div>
       <Navbar />
-     
+      
       <Routes>
         <Route
           path="/"

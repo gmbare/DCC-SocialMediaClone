@@ -148,6 +148,28 @@ router.get("/namefromid", async (req, res) => {
   }
 });
 
+router.get("/picfromid", async (req, res) => {
+  try {
+    let iterate = []
+    if (req.body._ids) {
+      iterate = req.body._ids
+    }
+    else if (req.query._ids) {
+      iterate = req.query._ids
+    }
+    const user = await iterate.map(async (id) => {
+      let test = await User.findById(id);
+      return test
+    })
+    Promise.all(user).then((userEntry) => {
+      console.log(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}))
+      return res.send(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
+    })
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 
 
 router.get("/friendsearch/:searchString", async (req, res) => {
