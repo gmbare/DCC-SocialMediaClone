@@ -10,6 +10,7 @@ import "./ProfilePage.css"
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import FormData from 'form-data'
+// import burgerbackground from './assets/burgerbackground.mp4'
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
@@ -64,6 +65,7 @@ const ProfilePage = () => {
 
   return (
     <div className="container">
+      {/* <video src={burgerbackground} /> */}
       <h1 className="text-left">Home Page for {user.name}</h1>
       <div className="container d-flex">
         <div className="w-75 m-2 border border-start">
