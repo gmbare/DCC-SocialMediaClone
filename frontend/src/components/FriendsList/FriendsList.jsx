@@ -9,8 +9,8 @@ const FriendsList = (props) => {
   const [friendsNames, setFriendsNames] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
-  const [friendsPicture, setFriendsPictures] = useState();
-  const [pendingFriendsPictures, setPendingFriendsPictures] = useState([]);
+  const [friendsPicture, setFriendsPictures] = useState([`uploads\\images\\burger.jpg`, `uploads\\images\\burger.jpg`]);
+  const [pendingFriendsPictures, setPendingFriendsPictures] = useState([`uploads\\images\\burger.jpg`]);
 
 
   const getFriends = async () => {
@@ -38,7 +38,7 @@ const FriendsList = (props) => {
       const pendingfriendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`,  {params: {"_ids":pendingFriendList.data}})
       setPendingFriendsNames(pendingfriendListNames.data)
       const pendingPictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : pendingFriendList.data}})
-      console.log(pendingPictureFrames.data)
+      // console.log(pendingPictureFrames.data)
       setPendingFriendsPictures(pendingPictureFrames.data)
       // console.log(pendingfriendListNames);
       })
