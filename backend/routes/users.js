@@ -1,6 +1,6 @@
 const { User, validateLogin, validateUser } = require("../models/user");
 const { Post } = require("../models/post");
-
+const fs =require('fs')
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const fileUpload = require("../middleware/file-upload");
@@ -8,6 +8,7 @@ const fileUpload = require("../middleware/file-upload");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
+const defaultRoute = "http://localhost:3008/backend/"
 
 //* POST register a new user and upload image via middleware
 router.post("/register",
@@ -162,8 +163,7 @@ router.get("/picfromid", async (req, res) => {
       return test
     })
     Promise.all(user).then((userEntry) => {
-      // console.log(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}))
-      return res.send(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
+      return res.send(userEntry.map((entry) => {if(entry.image.length > 0 && fs.existsSync(entry.image)){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
     })
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
@@ -175,7 +175,6 @@ router.get("/picfromid", async (req, res) => {
 router.get("/friendsearch/:searchString", async (req, res) => {
 try{
   console.log(req.params.searchString)
-  // let owner = await User.find({name: req.params.searchString.trim()}||{email:req.params.searchString})
   let owner = await User.find({$or:[{name: {$regex: new RegExp(req.params.searchString.trim(), "i")}} , {email: {$regex: new RegExp(req.params.searchString.trim(), "i")}}]})
   // console.log(owner)
   return res.send(owner)
