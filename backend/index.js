@@ -19,7 +19,7 @@ app.use(`/api/users`, usersRouter);
 app.use(`/api/abouts`, aboutsRouter);
 app.use(`/api/posts`, postsRouter);
 
-app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use('/backend/uploads/images', express.static(path.join('uploads', 'images')));
 app.use ((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, (err)  => {

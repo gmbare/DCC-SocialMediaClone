@@ -148,6 +148,28 @@ router.get("/namefromid", async (req, res) => {
   }
 });
 
+router.get("/picfromid", async (req, res) => {
+  try {
+    let iterate = []
+    if (req.body._ids) {
+      iterate = req.body._ids
+    }
+    else if (req.query._ids) {
+      iterate = req.query._ids
+    }
+    const user = await iterate.map(async (id) => {
+      let test = await User.findById(id);
+      return test
+    })
+    Promise.all(user).then((userEntry) => {
+      // console.log(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}))
+      return res.send(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
+    })
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 
 
 router.get("/friendsearch/:searchString", async (req, res) => {
@@ -197,10 +219,10 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
       owner.friends.push(req.params.friendId);
       friend.friends.push(req.params.ownerId);
       if (owner.pendingFriends.includes(req.params.friendId)){
-        owner.pendingFriends.splice(owner.pendingFriends.indexOf(req.params.friendId))
+        owner.pendingFriends.splice(owner.pendingFriends.indexOf(req.params.friendId), 1)
       }
       if (friend.pendingFriends.includes(req.params.ownerId)){
-        friend.pendingFriends.splice(friend.pendingFriends.indexOf(req.params.ownerId))
+        friend.pendingFriends.splice(friend.pendingFriends.indexOf(req.params.ownerId), 1)
       }
       await owner.save();
       await friend.save();
@@ -222,19 +244,24 @@ router.put("/:ownerId/removefriend/:friendId/list/:list", async (req, res) => {
     if (!user) return res.status(400).send(`User does not exist!`)
     let list = req.params.list
     if (list == "pending") {
-      let arr = user.pendingFriends;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === req.params.friendId) {
-          arr.splice(i, 1);
-        }
+      // let arr = user.pendingFriends;
+      if (owner.pendingFriends.includes(req.params.friendId)){
+        owner.pendingFriends.splice(owner.pendingFriends.indexOf(req.params.friendId))
       }
     } else if (list == "approved") {
-      let arr = user.friends;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === req.params.friendId) {
-          arr.splice(i, 1);
-        }
+      console.log(req.params)
+      let friend = await User.findById(req.params.friendId)
+      if (!friend) return res.status(400).send(`User does not exist!`)
+      if (user.friends.includes(req.params.friendId)){
+          user.friends.splice(user.friends.indexOf(req.params.friendId), 1)
+          console.log(user.friends)
       }
+      if (friend.friends.includes(req.params.ownerId)){
+        friend.friends.splice(friend.friends.indexOf(req.params.ownerId),1)
+        console.log(friend.friends)
+      }
+      // for (let 
+      await friend.save();
     }
     await user.save();
     return res.status(200).send(user);

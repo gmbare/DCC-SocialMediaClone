@@ -1,6 +1,10 @@
 const { User, validateLogin, validateUser } = require("../models/user");
 const { About, validateAbout } = require("../models/aboutMe")
 
+const fileUpload = require("../middleware/file-upload");
+
+const fs = require('fs');
+const path = require('path');
 const express = require("express");
 const router = express.Router();
 
@@ -9,11 +13,39 @@ const { aboutMeSchema } = require("../models/aboutMe");
 
 
 
+router.post("/profilepic/:userId",fileUpload.single("image"), async(req, res) => {
+try{
+    console.log(req.file)
+    let user = await User.findById(req.params.userId);
+    let oldImage = user.image
+    if (oldImage != ""){
+        fs.unlink(oldImage, (err) => {
+            console.log(err)
+        })
+    }
+    user.image = req.file.path
+    await user.save()
+    return res.send(user)
+}catch(err){
+    return res.status(500).send(`Internal Server Error: ${err}`);
+}
+})
+
+
+router.get("/profilepic/:userId", async (req,res) => {
+try{
+    let user = await User.findById(req.params.userId);
+    console.log(user.image)
+    return res.send(user.image)    
+}catch(err){
+    return res.status(500).send(`Internal Server Error: ${err}`);
+
+}
+})
 
 // POST about me
 router.post("/:userId", async (req, res) => {
     try {
-        console.log(req.body)
         let {error} = validateAbout(req.body);
         if (error) return res.status(400).send(`Your About Me status had the following errors: ${error}`)
 

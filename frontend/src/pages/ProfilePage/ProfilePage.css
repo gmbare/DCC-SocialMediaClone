@@ -6,6 +6,25 @@
 .lg-avatar img{ 
     clip-path: circle(60px at center);    
 }
+
+.z-i100{
+    z-index: 100;
+    border:.5rem;
+    border-style: dotted;
+}
+
+.visible{
+    position: relative;
+    width:20rem;
+    height:10rem;
+    visibility: visible;
+    background-color: white;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
 .editIcon{
     font-size:2rem;
     color:brown;

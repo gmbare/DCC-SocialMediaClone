@@ -16,36 +16,36 @@ function AddAbouts(props) {
     setAbouts(userAbout.data.about.text);
   }
 
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
+  //   let newAboutMe = {
+  //     aboutMe: about,
+  //   };
+  //   await axios.put(
+  //     `http://localhost:3008/api/abouts/${user._id}`,
+  //     newAboutMe
+      
+  //   );
+    
+  // }
+
+
+
   async function handleSubmit(event) {
     event.preventDefault();
-    let newAboutMe = {
-      aboutMe: about,
-    };
-    await axios.put(
-      `http://localhost:3008/api/abouts/${user._id}`,
-      newAboutMe
-      
-    );
-    
+    let strAboutMe = document.getElementById("commentField").value
+    // console.log(strAboutMe);
+    // console.log(props.userId);
+    await axios.post(`http://localhost:3008/api/abouts/${props.userId}`, {
+      text: strAboutMe,
+    });
+    getAboutMe()
   }
 
 
 
-  // async function handleSubmit(event) {
-  //   event.preventDefault();
-  //   let strAboutMe = { aboutMe: about,
-  //   };
-   
-  //   console.log(strAboutMe);
-  //   console.log(props.userId);
-  //   await axios.post(`http://localhost:3008/api/abouts/${props.userId}`, {
-  //     text: strAboutMe,
-      
-  //   });
-  // }
  useEffect(() => {
     getAboutMe();
-    handleSubmit();
   }, []);
 
   return (
@@ -61,8 +61,7 @@ function AddAbouts(props) {
             type="text"
             name="comment"
             id="commentField"
-            value={about}
-            onChange={(e) => setAbouts(e.target.value)}
+            defaultValue={about}
             
           
           ></input>
