@@ -9,7 +9,8 @@ const FriendsList = (props) => {
   const [friendsNames, setFriendsNames] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
-  
+  const [friendsPicture, setFriendsPictures] = useState();
+  const [pendingFriendsPictures, setPendingFriendsPictures] = useState([]);
 
 
   const getFriends = async () => {
@@ -20,6 +21,8 @@ const FriendsList = (props) => {
         props.setMFriends(friendList.data)
         const friendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`, {params: {"_ids" : friendList.data}})
         setFriendsNames(friendListNames.data)
+        const pictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : friendList.data}})
+        setFriendsPictures(pictureFrames.data)
       })
     } catch (err) {
       console.log(err);
@@ -34,6 +37,9 @@ const FriendsList = (props) => {
       setPendingFriends(pendingFriendList.data);
       const pendingfriendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`,  {params: {"_ids":pendingFriendList.data}})
       setPendingFriendsNames(pendingfriendListNames.data)
+      const pendingPictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : pendingFriendList.data}})
+      console.log(pendingPictureFrames.data)
+      setPendingFriendsPictures(pendingPictureFrames.data)
       // console.log(pendingfriendListNames);
       })
     } catch (err) {
@@ -88,7 +94,9 @@ return (
         {friendsNames.map((friend, index) => {
           return (
             <li className="list-group-item" key={index}>
-              {friend}
+              {/* {console.log(`http://localhost:3008/backend/${friendsPicture[index]}`)} */}
+            <img src={`http://localhost:3008/backend/${friendsPicture[index]}`}/>  
+            {friend}
               
             </li>
           );
