@@ -7,7 +7,6 @@ import { FaHome } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 import { RiImageEditFill } from 'react-icons/ri';
 import "./ProfilePage.css"
-import "./ProfilePage.css"
 import {useLocation} from "react-router-dom";
 
 const ProfilePage = () => {
@@ -28,8 +27,15 @@ const ProfilePage = () => {
           <div className="container">
             <div className="d-flex">
               <div className="lg-avatar">
-          <img src={`http://localhost:3008/backend/${userImage}`} alt={`image-${user._id}`} /> 
+                <button>
+                <img src={`http://localhost:3008/backend/${userImage}`} alt={`image-${user._id}`} onClick={() => {if (document.getElementById('changeProfilePic').className == 'z-i100 visible') {
+                  document.getElementById('changeProfilePic').className = 'z-i100 invisible';} else if (document.getElementById('changeProfilePic').className == 'z-i100 invisible'){document.getElementById('changeProfilePic').className = 'z-i100 visible'}
+                  }}/> 
+                </button>
                 <div className="editIcon"><RiImageEditFill /></div>
+                <div className="z-i100 invisible" id='changeProfilePic'>
+                  <input type='file' /><button>Submit</button>
+                </div>
               </div>
               <div className="mt-2 ms-3 editInfo">
                 <div className="p-info-icon"><FaEdit /></div>
