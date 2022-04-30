@@ -162,7 +162,7 @@ router.get("/picfromid", async (req, res) => {
       return test
     })
     Promise.all(user).then((userEntry) => {
-      console.log(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}))
+      // console.log(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}))
       return res.send(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
     })
   } catch (ex) {

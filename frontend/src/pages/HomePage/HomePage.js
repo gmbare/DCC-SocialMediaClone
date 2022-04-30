@@ -20,6 +20,7 @@ const HomePage = () => {
     if (img.data.length > 0){
       setUserImage(img.data)
     }
+    return (img.data)
   }
 
   useEffect(() => {
