@@ -1,0 +1,28 @@
+.lg-avatar{
+    width:125px;
+    height:125px;  
+    position:relative;  
+}
+.lg-avatar img{ 
+    clip-path: circle(60px at center);    
+}
+.editIcon{
+    font-size:2rem;
+    color:brown;
+    position:absolute;
+    bottom:-5px;
+    right:-5px;
+}
+
+.editInfo{position:relative;}
+.p-info-icon{position:absolute;font-size:1.5rem;left:-.5rem;}
+
+.editInfo .label{
+    font-size:1.2rem;
+    font-weight:bold;
+    text-align:right;
+    width:5rem;
+    margin-right:1rem;
+
+}
+.profileinfo{font-size:1.1rem;padding-top:.15rem;}
