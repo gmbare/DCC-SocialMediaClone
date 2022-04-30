@@ -10,6 +10,7 @@ import "./ProfilePage.css"
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import FormData from 'form-data'
+// import burgerbackground from './assets/burgerbackground.mp4'
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
@@ -64,6 +65,7 @@ const ProfilePage = () => {
 
   return (
     <div className="container">
+      {/* <video src={burgerbackground} /> */}
       <h1 className="text-left">Home Page for {user.name}</h1>
       <div className="container d-flex">
         <div className="w-75 m-2 border border-start">
@@ -80,8 +82,6 @@ const ProfilePage = () => {
                 <div className="editIcon"><RiImageEditFill /></div>
                 <div className="z-i100 invisible" id='changeProfilePic'>
                     <h1> Upload Image </h1>
-                    {/* <form onSubmit={() => handleSubmit} enctype="multipart/form-data" method="POST"> */}
-                    {/* <form action={`http://localhost:3008/api/abouts/profilepic/${user._id}`} encType="multipart/form-data" method="POST"> */}
                     <form onSubmit={(e) => handleSubmit(e)}>
                       <input type="file" name="myImage"  id="imageUpload" accept="image/png, image/jpeg, image/jpg"/>
                       <input type="submit" value="Upload Photo"/>
