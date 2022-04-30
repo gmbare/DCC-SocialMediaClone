@@ -80,8 +80,6 @@ const ProfilePage = () => {
                 <div className="editIcon"><RiImageEditFill /></div>
                 <div className="z-i100 invisible" id='changeProfilePic'>
                     <h1> Upload Image </h1>
-                    {/* <form onSubmit={() => handleSubmit} enctype="multipart/form-data" method="POST"> */}
-                    {/* <form action={`http://localhost:3008/api/abouts/profilepic/${user._id}`} encType="multipart/form-data" method="POST"> */}
                     <form onSubmit={(e) => handleSubmit(e)}>
                       <input type="file" name="myImage"  id="imageUpload" accept="image/png, image/jpeg, image/jpg"/>
                       <input type="submit" value="Upload Photo"/>
