@@ -70,8 +70,8 @@ const ProfilePage = () => {
           <div className="container">
             <div className="d-flex">
               <div className="lg-avatar">
-                <button>
-                  <img src={`http://localhost:3008/backend/${userImage}`} alt={`image-${user._id}`} onClick={() => {
+                <button className="btn btn-avatar">
+                  <img className="pro-avatar rounded-circle" src={`http://localhost:3008/backend/${userImage}`} alt={`image-${user._id}`} onClick={() => {
                     if (document.getElementById('changeProfilePic').className == 'z-i100 visible') {
                       document.getElementById('changeProfilePic').className = 'z-i100 invisible';
                     } else if (document.getElementById('changeProfilePic').className == 'z-i100 invisible') { document.getElementById('changeProfilePic').className = 'z-i100 visible' }
@@ -91,15 +91,14 @@ const ProfilePage = () => {
               <div className="mt-2 ms-3 editInfo">
                 <div className="p-info-icon"><FaEdit /></div>
                 <div className="d-flex">
-                  <div className="label">Name: </div><div className="profileinfo">{/*NAME GOES HERE*/}</div>
+                  <div className="label">Name: </div><div className="profileinfo">{user.name}</div>
                 </div>
                 <div className="d-flex">
-                  <div className="label">Edit: </div><div className="profileinfo">{/*EMAIL GOES HERE*/}</div>
+                  <div className="label">Email: </div><div className="profileinfo">{user.email}</div>
                 </div>
               </div>
             </div>
-            <AddAbouts userId={user._id} />
-            <p className="editProfile-text">{user.name}</p>
+            <AddAbouts userId={user._id} />            
           </div>
         </div>
         <div>

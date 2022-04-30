@@ -99,7 +99,7 @@ function MainFeed(props) {
                   <DeletePost postId = {posts.post._id} ownerId = {posts.post.ownerId} userId={props.userId} getPosts={getPosts} />
                 </div>
                 
-                <div>
+                <div className="imgholder">
                   <Rating postId={posts.post._id} userId={props.userId} getPosts={getPosts} />                 
                   <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
                   <div className="message">

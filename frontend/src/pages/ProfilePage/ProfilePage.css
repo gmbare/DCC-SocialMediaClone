@@ -3,8 +3,16 @@
     height:125px;  
     position:relative;  
 }
-.lg-avatar img{ 
-    clip-path: circle(60px at center);    
+.lg-avatar .btn-avatar{ 
+    width:120px;
+    background-color: transparent;
+}
+.lg-avatar .btn-avatar:hover{ 
+    background-color: transparent;
+}
+.pro-avatar{ 
+    width:10rem;
+    height:10rem
 }
 
 .z-i100{
