@@ -82,7 +82,9 @@ const ProfilePage = () => {
                 <div className="editIcon"><RiImageEditFill /></div>
                 <div className="z-i100 invisible" id='changeProfilePic'>
                     <h1> Upload Image </h1>
-                    <form onSubmit={(e) => handleSubmit(e)}>
+                    <form onSubmit={(e) => {handleSubmit(e)
+                  document.getElementById('changeProfilePic').className = 'z-i100 invisible'
+                  }}>
                       <input type="file" name="myImage"  id="imageUpload" accept="image/png, image/jpeg, image/jpg"/>
                       <input type="submit" value="Upload Photo"/>
                     </form>
