@@ -29,7 +29,7 @@ const FriendsList = (props) => {
         const pictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : friendList.data}})
         setFriendsPictures(pictureFrames.data)
         const onlineCheck = await axios.get(`http://localhost:3008/api/users/onlinecheckfromid`, {params: {"_ids" : friendList.data}})
-        setFriendsPictures(onlineCheck.data)
+        setFrendOnline(onlineCheck.data)
       })
     } catch (err) {
       console.log(err);
@@ -119,12 +119,15 @@ return (
               <li className="list-group-item fl-avatar" key={index}>
               <div className="d-flex">
                 <div className="friends w-75">
+                  {console.log(`http://localhost:3008/backend/${friendsPicture[index]}`)}
                   <img src={`http://localhost:3008/backend/${friendsPicture[index]}`} className={`rounded-circle me-2 ${function(){
                     if(friendOnline[index] == "Online"){
-                      return "onlineBorder"
+                      console.log("OnlineBorder")
+                      return "onlineborder"
                     }
-                    else if(friendOnline[index] == "Offline"){
-                      return "offlineBorder"
+                    else if(friendOnline[index] != "Online"){
+                      console.log("OfflineBorder")
+                      return "offlineborder"
                     }
                   }()}`} align="left" />  
                   <div className="pt-2">{friend}</div>
