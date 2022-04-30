@@ -7,6 +7,7 @@ import "./FriendsList.css"
 const FriendsList = (props) => {
   const { user } = useContext(AuthContext);
   const [friendsNames, setFriendsNames] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
   const [friendsPicture, setFriendsPictures] = useState([`uploads\\images\\burger.jpg`, `uploads\\images\\burger.jpg`]);
@@ -19,6 +20,7 @@ const FriendsList = (props) => {
         `http://localhost:3008/api/users/${user._id}/friends`
       ).then( async (friendList) => {
         props.setMFriends(friendList.data)
+        setFriends(friendList.data)
         const friendListNames = await axios.get(`http://localhost:3008/api/users/namefromid`, {params: {"_ids" : friendList.data}})
         setFriendsNames(friendListNames.data)
         const pictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : friendList.data}})
@@ -61,6 +63,13 @@ const FriendsList = (props) => {
     getPendingFriends()
   }   
 
+  const removeFriend = async (e,index) => {
+    // console.log(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
+    console.log(friends)
+    await axios.put(`http://localhost:3008/api/users/${user._id}/removefriend/${friends[index]}/list/approved`)
+    getFriends()
+    getPendingFriends()
+  }   
 
   useEffect(() => {
       getFriends();
@@ -99,6 +108,7 @@ return (
               <li className="list-group-item" key={index}>
               <img src={`http://localhost:3008/backend/${friendsPicture[index]}`}/>  
                 {friend}
+              <button onClick={((e) => {removeFriend(e, index)})}>X</button>
                 
               </li>
             );
