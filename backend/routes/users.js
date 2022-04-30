@@ -1,6 +1,6 @@
 const { User, validateLogin, validateUser } = require("../models/user");
 const { Post } = require("../models/post");
-
+const fs =require('fs')
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const fileUpload = require("../middleware/file-upload");
@@ -8,6 +8,7 @@ const fileUpload = require("../middleware/file-upload");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
+const defaultRoute = "http://localhost:3008/backend/"
 
 //* POST register a new user and upload image via middleware
 router.post("/register",
@@ -63,11 +64,26 @@ router.post("/login", async (req, res) => {
       req.body.password,
       user.password
     );
+    user.online = "Online"
     if (!validPassword)
       return res.status(400).send("Invalid email or password.");
 
     const token = user.generateAuthToken();
+    user.save()
     return res.send(token);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  try {
+    console.log(req.body)
+    let user = await User.findById(req.body._id);
+    if (!user) return res.status(400).send(`Invalid email or password.`);
+    user.online = "Offline"
+    user.save()
+    return res.send(user);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
@@ -148,6 +164,28 @@ router.get("/namefromid", async (req, res) => {
   }
 });
 
+router.get("/onlinecheckfromid", async (req, res) => {
+  try {
+    let iterate = []
+    if (req.body._ids) {
+      iterate = req.body._ids
+    }
+    else if (req.query._ids) {
+      iterate = req.query._ids
+    }
+    const user = await iterate.map(async (id) => {
+      let test = await User.findById(id);
+      return test
+    })
+    Promise.all(user).then((userEntry) => {
+      return res.send(userEntry.map((entry) => {if(entry.online){return entry.online;}else{return "Offline"}}));
+      // return res.send(userEntry.map((entry) => { return entry.online }));
+    })
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 router.get("/picfromid", async (req, res) => {
   try {
     let iterate = []
@@ -162,8 +200,7 @@ router.get("/picfromid", async (req, res) => {
       return test
     })
     Promise.all(user).then((userEntry) => {
-      // console.log(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}))
-      return res.send(userEntry.map((entry) => { if(entry.image.length > 0){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
+      return res.send(userEntry.map((entry) => {if(entry.image.length > 0 && fs.existsSync(entry.image)){return entry.image;}else{return "uploads\\images\\burger.jpg"}}));
     })
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
@@ -175,7 +212,6 @@ router.get("/picfromid", async (req, res) => {
 router.get("/friendsearch/:searchString", async (req, res) => {
 try{
   console.log(req.params.searchString)
-  // let owner = await User.find({name: req.params.searchString.trim()}||{email:req.params.searchString})
   let owner = await User.find({$or:[{name: {$regex: new RegExp(req.params.searchString.trim(), "i")}} , {email: {$regex: new RegExp(req.params.searchString.trim(), "i")}}]})
   // console.log(owner)
   return res.send(owner)

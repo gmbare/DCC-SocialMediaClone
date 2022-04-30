@@ -3,6 +3,8 @@ import axios from "axios";
 import AuthContext from "../../context/AuthContext";
 import SearchFriend from "./SearchFriend/SearchFriend"
 import "./FriendsList.css"
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { RiAddCircleLine } from 'react-icons/ri'
 
 const FriendsList = (props) => {
   const { user } = useContext(AuthContext);
@@ -12,6 +14,7 @@ const FriendsList = (props) => {
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
   const [friendsPicture, setFriendsPictures] = useState([`uploads\\images\\burger.jpg`, `uploads\\images\\burger.jpg`]);
   const [pendingFriendsPictures, setPendingFriendsPictures] = useState([`uploads\\images\\burger.jpg`]);
+  const [friendOnline, setFrendOnline] = useState([]);
 
 
   const getFriends = async () => {
@@ -25,6 +28,8 @@ const FriendsList = (props) => {
         setFriendsNames(friendListNames.data)
         const pictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : friendList.data}})
         setFriendsPictures(pictureFrames.data)
+        const onlineCheck = await axios.get(`http://localhost:3008/api/users/onlinecheckfromid`, {params: {"_ids" : friendList.data}})
+        setFrendOnline(onlineCheck.data)
       })
     } catch (err) {
       console.log(err);
@@ -84,15 +89,21 @@ return (
     <SearchFriend userId={user._id} getPendingFriends={getPendingFriends}/>
   </div>
   <div className="friendslist-placement">
-    <div className="mb-3 border-bottom border-danger p-5">
+    <div className="mb-3 border-bottom border-danger mt-4">
       <h3>Pending Friends</h3>
-      <ul className="list-group list-group-flush text-start">
+      <ul className="list-group list-group-flush text-start border">
         {pendingFriendsNames.map((pendingFriend, index) => {
           return (
-            <li className="list-group-item" key={index}>
-              {pendingFriend}
-              <button onClick={((e) => {acceptFriend(e, index)})}>A</button>
-              <button onClick={((e) => {denyFriend(e, index)})}>X</button>
+            <li className="list-group-item p-0" key={index}>
+              <div className="d-flex">
+                <div className="friends w-75">
+                  <div className="pt-2"><em>{pendingFriend}</em></div>
+                </div>
+                <div className="align-middle w-25 d-flex">
+                  <button className="btn btn-add m-0 pb-1" onClick={((e) => {acceptFriend(e, index)})}><RiAddCircleLine /></button>
+                  <button className="btn btn-del m-0 pb-1" onClick={((e) => {denyFriend(e, index)})}><RiDeleteBin6Line /></button>
+                </div>
+              </div>
             </li>
           )
         })
@@ -102,14 +113,29 @@ return (
     <div className="mb-3 border-bottom border-danger">
       <h3>Friends List</h3>
       <div>
-        <ul className="list-group list-group-flush text-start">
+        <ul className="list-group list-group-flush text-start border">
           {friendsNames.map((friend, index) => {
             return (
-              <li className="list-group-item" key={index}>
-              <img src={`http://localhost:3008/backend/${friendsPicture[index]}`}/>  
-                {friend}
-              <button onClick={((e) => {removeFriend(e, index)})}>X</button>
-                
+              <li className="list-group-item fl-avatar" key={index}>
+              <div className="d-flex">
+                <div className="friends w-75">
+                  {console.log(`http://localhost:3008/backend/${friendsPicture[index]}`)}
+                  <img src={`http://localhost:3008/backend/${friendsPicture[index]}`} className={`rounded-circle me-2 ${function(){
+                    if(friendOnline[index] == "Online"){
+                      console.log("OnlineBorder")
+                      return "onlineborder"
+                    }
+                    else if(friendOnline[index] != "Online"){
+                      console.log("OfflineBorder")
+                      return "offlineborder"
+                    }
+                  }()}`} align="left" />  
+                  <div className="pt-2">{friend}</div>
+                </div>
+                <div className="align-middle w-25">
+                  <button className="btn btn-del m-0 pb-1" onClick={((e) => {removeFriend(e, index)})}><RiDeleteBin6Line /></button>
+                </div>
+              </div>  
               </li>
             );
           })}
