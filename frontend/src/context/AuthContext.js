@@ -51,8 +51,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
     if (user) {
+      console.log(user)
+      let response = await axios.post(`${BASE_URL}/logout`, user);
       localStorage.removeItem("token");
       setUser(null);
       navigate("/");
