@@ -64,11 +64,26 @@ router.post("/login", async (req, res) => {
       req.body.password,
       user.password
     );
+    user.online = "Online"
     if (!validPassword)
       return res.status(400).send("Invalid email or password.");
 
     const token = user.generateAuthToken();
+    user.save()
     return res.send(token);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  try {
+    console.log(req.body)
+    let user = await User.findById(req.body._id);
+    if (!user) return res.status(400).send(`Invalid email or password.`);
+    user.online = "Offline"
+    user.save()
+    return res.send(user);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
@@ -143,6 +158,28 @@ router.get("/namefromid", async (req, res) => {
     })
     Promise.all(user).then((userEntry) => {
       return res.send(userEntry.map((entry) => { return entry.name }));
+    })
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.get("/onlinecheckfromid", async (req, res) => {
+  try {
+    let iterate = []
+    if (req.body._ids) {
+      iterate = req.body._ids
+    }
+    else if (req.query._ids) {
+      iterate = req.query._ids
+    }
+    const user = await iterate.map(async (id) => {
+      let test = await User.findById(id);
+      return test
+    })
+    Promise.all(user).then((userEntry) => {
+      return res.send(userEntry.map((entry) => {if(entry.online){return entry.online;}else{return "Offline"}}));
+      // return res.send(userEntry.map((entry) => { return entry.online }));
     })
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
