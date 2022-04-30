@@ -1,6 +1,6 @@
-const { User, validateLogin, validateUser} = require("../models/user");
+const { User, validateLogin, validateUser } = require("../models/user");
+const { About, validateAbout } = require("../models/aboutMe")
 
-const {About, validateAbout} = require("../models/aboutMe")
 const fileUpload = require("../middleware/file-upload");
 
 const fs = require('fs');
@@ -42,6 +42,7 @@ try{
 }
 })
 
+// POST about me
 router.post("/:userId", async (req, res) => {
     try {
         let {error} = validateAbout(req.body);
@@ -63,6 +64,19 @@ router.post("/:userId", async (req, res) => {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 });
+
+
+// GET about me 
+router.get("/:userId", async (req, res) => {
+    try {
+        let ownerAboutMe = await User.findById(req.params.userId);
+        if (!ownerAboutMe) return res.status(400).send("No about me!");
+        return res.status(200).send(ownerAboutMe);
+    } catch (error) {
+        return res.status(500).send(`Internal Server Error: ${error}`);
+    }
+});
+
 
 module.exports = router;
       
