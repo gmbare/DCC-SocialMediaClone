@@ -15,6 +15,7 @@ const { aboutMeSchema } = require("../models/aboutMe");
 
 router.post("/profilepic/:userId",fileUpload.single("image"), async(req, res) => {
 try{
+    console.log(req.file)
     let user = await User.findById(req.params.userId);
     let oldImage = user.image
     if (oldImage != ""){
@@ -33,8 +34,8 @@ try{
 
 router.get("/profilepic/:userId", async (req,res) => {
 try{
-    console.log(req.params)
     let user = await User.findById(req.params.userId);
+    console.log(user.image)
     return res.send(user.image)    
 }catch(err){
     return res.status(500).send(`Internal Server Error: ${err}`);
