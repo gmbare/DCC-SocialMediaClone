@@ -7,10 +7,12 @@ function AddAbouts(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     let strAboutMe = document.getElementById("commentField").value;
+   
     console.log(strAboutMe);
     console.log(props.userId);
     await axios.post(`http://localhost:3008/api/abouts/${props.userId}`, {
       text: strAboutMe,
+      
     });
   }
 

@@ -1,0 +1,32 @@
+.pos-sticky{
+    position:fixed;
+    right:0rem;
+    width:25rem;
+    /* width:5rem; */
+}
+
+.m-5{
+    margin:50rem;
+}
+.editProfile{ 
+    width: 100%;
+    height: 5rem;
+    position: relative;
+    border: .1rem;
+    border-style: groove;
+    text-align:left;
+}
+
+.editProfile-text{
+    position: absolute;
+    top:.05rem;
+    right:1rem;
+    white-space: normal;
+    font-size: xxx-large;
+}
+
+.fit-content{
+    position:relative;
+    width:fit-content;
+    height:fit-content;
+}

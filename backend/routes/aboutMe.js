@@ -1,5 +1,5 @@
 const { User, validateLogin, validateUser } = require("../models/user");
-const {About, validateAbout} = require("../models/aboutMe")
+const { About, validateAbout } = require("../models/aboutMe")
 
 const express = require("express");
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post("/:userId", async (req, res) => {
     try {
         console.log(req.body)
         let {error} = validateAbout(req.body);
-        if (error) return res.status(400).send(`Your About me status had the following errors: ${error}`)
+        if (error) return res.status(400).send(`Your About Me status had the following errors: ${error}`)
 
         const user = await User.findById(req.params.userId);
         if (!user)
@@ -35,31 +35,16 @@ router.post("/:userId", async (req, res) => {
 });
 
 
-
-// GET user About me
+// GET about me 
 router.get("/:userId", async (req, res) => {
     try {
-        console.log(req.body)
-        let {error} = validateAbout(req.body);
-        if (error) return res.status(400).send(`Your About me status had the following errors: ${error}`)
-
-        const user = await User.findById(req.params.userId);
-        if (!user)
-        return res
-        .status(400)
-        .send(`User with id ${req.params.userId} does not exist!`);
-
-        const newAboutMe = await About(req.body);
-        user.about = newAboutMe
-
-        
-            return res.status(201).send(user);
-        
-    } catch (ex) {
-        return res.status(500).send(`Internal Server Error: ${ex}`);
+        let ownerAboutMe = await User.findById(req.params.userId);
+        if (!ownerAboutMe) return res.status(400).send("No about me!");
+        return res.status(200).send(ownerAboutMe);
+    } catch (error) {
+        return res.status(500).send(`Internal Server Error: ${error}`);
     }
 });
-
 
 
 module.exports = router;

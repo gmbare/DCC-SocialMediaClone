@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
+import SearchFriend from "./SearchFriend/SearchFriend"
+import "./FriendsList.css"
 
 const FriendsList = (props) => {
   const { user } = useContext(AuthContext);
@@ -24,10 +26,6 @@ const FriendsList = (props) => {
     }
   };
 
-  useEffect(() => {
-    getFriends();
-  }, []);
-
   const getPendingFriends = async () => {
     try {
       await axios.get(
@@ -44,28 +42,33 @@ const FriendsList = (props) => {
   };
 
   const acceptFriend = async (e,index) => {
-    console.log(`http://localhost:3008/api/users/${user._id}/friend/${pendingFriends[index]}`)
-    const acceptedFriend = await axios.put(`http://localhost:3008/api/users/${user._id}/friend/${pendingFriends[index]}`)
+    // console.log(`http://localhost:3008/api/users/${user._id}/friend/${pendingFriends[index]}`)
+    await axios.put(`http://localhost:3008/api/users/${user._id}/friend/${pendingFriends[index]}`)
     getFriends()
     getPendingFriends()
   }
 
-  useEffect(async () => {
-    await getFriends();
-    await getPendingFriends();
-  }, []);
-
   const denyFriend = async (e,index) => {
-    console.log(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
-    const deniedFriend = await axios.put(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
+    // console.log(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
+    await axios.put(`http://localhost:3008/api/users/${user._id}/removefriend/${pendingFriends[index]}/list/pending`)
     getFriends()
     getPendingFriends()
   }   
 
 
+  useEffect(() => {
+      getFriends();
+      getPendingFriends();
+  }, []);
+
+
 
 return (
   <div>
+  <div className="">
+    <SearchFriend userId={user._id} getPendingFriends={getPendingFriends}/>
+  </div>
+  <div className="friendslist-placement">
     <h2>Pending Friends</h2>
     <ul className="list-group">
       {pendingFriendsNames.map((pendingFriend, index) => {
@@ -93,6 +96,7 @@ return (
       </ul>
       <div></div>
     </div>
+  </div>
   </div>
 );
 };

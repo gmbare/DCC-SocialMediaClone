@@ -126,7 +126,7 @@ router.get("/:userId/pendingFriends", async (req, res) => {
 });
 
 
-// GET all pendingFriends
+// GET all pendingFriends Name
 router.get("/namefromid", async (req, res) => {
   try {
     let iterate = []
@@ -148,9 +148,28 @@ router.get("/namefromid", async (req, res) => {
   }
 });
 
+
+
+router.get("/friendsearch/:searchString", async (req, res) => {
+try{
+  console.log(req.params.searchString)
+  // let owner = await User.find({name: req.params.searchString.trim()}||{email:req.params.searchString})
+  let owner = await User.find({$or:[{name: {$regex: new RegExp(req.params.searchString.trim(), "i")}} , {email: {$regex: new RegExp(req.params.searchString.trim(), "i")}}]})
+  // console.log(owner)
+  return res.send(owner)
+
+}catch(e){
+
+
+}
+})
+
 // PUT a pending friend
+//NOTE: friendId = the requester ID (the person sending the request), 
+//NOTE: ownerId = the requestee ID (The person receiving the request)
 router.put("/:ownerId/pendfriend/:friendId", async (req, res) => {
   try {
+    console.log(req.params)
     let owner = await User.findById(req.params.friendId);
     if (!owner) return res.status(400).send(`User does not exist!`)
     if (!owner.pendingFriends.includes(req.params.ownerId) && !owner.friends.includes(req.params.ownerId)) {
@@ -159,7 +178,7 @@ router.put("/:ownerId/pendfriend/:friendId", async (req, res) => {
       return res.status(200).send(owner);
     }
     else if (owner.pendingFriends.includes(req.params.ownerId) || owner.friends.includes(req.params.ownerId)) {
-      return res.status(401).send(`You are already friends with this user`)
+      return res.send(`You are already friends with this user`)
     }
   } catch (error) {
     return res.status(500).send(`Internal Server Error: ${error}`);
@@ -174,7 +193,6 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
     if (!owner) return res.status(400).send(`Owner does not exist!`)
     let friend = await User.findById(req.params.friendId)
     if (!friend) return res.status(400).send(`Friend does not exist!`)
-    // console.log(friend.name)
     if (!owner.friends.includes(req.params.friendId)) {
       owner.friends.push(req.params.friendId);
       friend.friends.push(req.params.ownerId);
@@ -189,7 +207,7 @@ router.put("/:ownerId/friend/:friendId", async (req, res) => {
       return res.status(200).send(owner);
     }
     else if (owner.friends.includes(req.params.friendId)) {
-      return res.status(401).send(`You are already friends with this user`)
+      return res.send(`You are already friends with this user`)
     }
   } catch (error) {
     return res.status(500).send(`Internal Server Error: ${error}`);
