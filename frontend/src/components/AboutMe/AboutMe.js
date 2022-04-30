@@ -14,8 +14,7 @@ function AddAbouts(props) {
     });
   }
 
-  useEffect(() => {
-    handleSubmit();
+  useEffect(() => {;
   }, []);
 
   return (

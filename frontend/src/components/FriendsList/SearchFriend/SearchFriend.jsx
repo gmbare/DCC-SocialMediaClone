@@ -23,7 +23,6 @@ const SearchFriend = (props) => {
        }
    }
 
-
    async function buttonHandler(e){
     e.preventDefault()
     await sendPendFriendRequest(e)
@@ -35,19 +34,14 @@ const SearchFriend = (props) => {
     let test = await axios.put(`http://localhost:3008/api/users/${props.userId}/pendfriend/${e.target.value}`)
     // console.log(test.data)
     return (test.data)
-   }
-
-   
-
-
-   
-   
-   
-   
+   }   
    
    return ( 
     <div>
-        <FaSearch/><input type="text" placeholder='Search for Friends' onKeyDown={(e) => {handleSearchSubmission(e)}}/>
+        <div className="input-group w-100 mt-3"> 
+            <span className="input-group-text shad-o"><FaSearch /></span>       
+            <input type="text" className="form-control shad-o " placeholder='Search for Friends' onKeyDown={(e) => {handleSearchSubmission(e)}}/>       
+        </div>
         <div className='placement'>
             {searchedFriends.map((entry, index) => {
                 return(
@@ -57,7 +51,6 @@ const SearchFriend = (props) => {
                 )
             })         
             }
-
         </div> 
     </div> );
 }
