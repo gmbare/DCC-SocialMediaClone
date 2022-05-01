@@ -18,7 +18,11 @@ export const AuthProvider = ({ children }) => {
 
   const registerUser = async (registerData) => {
     const myData = new FormData();
-    myData.append()
+    console.log(registerData)
+    myData.append('name', registerData.name)
+    myData.append('email', registerData.email)
+      myData.append('password', registerData.password)
+        myData.append('isAdmin',registerData.isAdmin)
     try {
       let response = await axios.post(`${BASE_URL}/register`, registerData);
       if (response.status === 200) {
