@@ -27,10 +27,10 @@
    }
 
 img.sm-avatar{
-    clip-path: circle(33px at center);
-    position:absolute;
-    left:-20px;
-    top:1px
+    object-fit: cover;
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
 }
 
 .fit-content{

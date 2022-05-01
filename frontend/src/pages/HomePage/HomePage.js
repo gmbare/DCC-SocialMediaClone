@@ -34,9 +34,13 @@ const HomePage = () => {
         <MainFeed userId={user._id} mFriends={mFriends} />
         <div className="m-5 ps-3 border-start border-dark pos-sticky">
           <Link type="button" to="/profile" className="editProfile" state={{userImage : userImage}}> 
-            <img src={`http://localhost:3008/backend/${userImage}`} className="sm-avatar m-0" alt={`image-${user._id}`} state={{userImage : userImage}}/>   
-            <p className="editProfile-text m-0 p-0 text-center ps-2">{user.name}</p>
-            <div className="text-center w-100 m-0 p-0"><small>view profile</small></div>
+            <div className="d-flex">
+              <img src={`http://localhost:3008/backend/${userImage}`} className="sm-avatar m-0 ms-2" alt={`image-${user._id}`} state={{userImage : userImage}}/>   
+              <div className="text-center">
+                <p className="editProfile-text m-0 p-0 text-center ps-2">{user.name}</p>
+                <div className="text-center w-100 m-0 p-0"><small>view profile</small></div>
+              </div>
+            </div>
           </Link>       
           <FriendsList userId={user._id} setMFriends={setMFriends} />
         </div>

@@ -1,6 +1,6 @@
 .lg-avatar{
-    width:125px;
-    height:125px;  
+    width:150px;
+    height:150px;  
     position:relative;  
 }
 .lg-avatar .btn-avatar{ 
@@ -11,13 +11,15 @@
     background-color: transparent;
 }
 .pro-avatar{ 
-    width:10rem;
-    height:10rem
+    object-fit: cover;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
 }
 
 .z-i100{
     z-index: 100;
-    border:.5rem;
+    border:.25rem;
     border-style: dotted;
 }
 
