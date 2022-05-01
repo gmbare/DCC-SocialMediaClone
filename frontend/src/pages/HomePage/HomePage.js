@@ -28,11 +28,13 @@ const HomePage = () => {
   },[])
   
   return (
-    <div className="container">
+    <div className="container shadow mt-2 border border-light">
       <h1 className="text-left">Home Page for {user.name}</h1>
-      <div className="container d-flex">
-        <MainFeed userId={user._id} mFriends={mFriends} />
-        <div className="m-5 ps-3 border-start border-dark pos-sticky">
+      <div className="container d-flex position-relative">
+        <div className="w-75 p-0 m-2">
+          <MainFeed userId={user._id} mFriends={mFriends} />
+        </div>
+        <div className="w-25 m-5 ps-3 border-start border-dark">
           <Link type="button" to="/profile" className="editProfile" state={{userImage : userImage}}> 
             <div className="d-flex">
               <img src={`http://localhost:3008/backend/${userImage}`} className="sm-avatar m-0 ms-2" alt={`image-${user._id}`} state={{userImage : userImage}}/>   

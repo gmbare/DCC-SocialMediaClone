@@ -3,8 +3,8 @@
     height:150px;  
     position:relative;  
 }
-.lg-avatar .btn-avatar{ 
-    width:120px;
+.btn-avatar{ 
+    width:130px;
     background-color: transparent;
 }
 .lg-avatar .btn-avatar:hover{ 
@@ -13,45 +13,90 @@
 .pro-avatar{ 
     object-fit: cover;
     border-radius: 50%;
+    border:1px solid rgb(197, 126, 19);
     height: 150px;
     width: 150px;
+    box-shadow: 0px 5px 8px #555;
 }
 
 .z-i100{
-    z-index: 100;
+    z-index: 30;
     border:.25rem;
     border-style: dotted;
+    border-radius:1rem;
+    border-color: #333;
+    width:25rem;
+    height:13rem;
+    position:relative;  
+    color:#fff;  
+    text-shadow: 0 2px 5px #333;
 }
 
-.visible{
-    position: relative;
-    width:20rem;
-    height:10rem;
-    visibility: visible;
-    background-color: white;
+.visible{     
+    display: normal;
+    background: rgba(230, 187, 97, 0.8);
+     
 }
 
 .invisible{
-    visibility: hidden;
+    display: none;
+}
+
+.dismiss{
+    font-size:3rem;
+    color:rgba(247, 8, 8);
+    position:absolute;
+    bottom:-2rem;
+    right:-2rem
+}
+
+.changePhoto{
+    position:absolute;
+    top:1rem;
+    left:2rem;
 }
 
 .editIcon{
-    font-size:2rem;
-    color:brown;
+    font-size:2.5rem;
+    color:rgb(253, 255, 254);
     position:absolute;
     bottom:-5px;
     right:-5px;
+    box-shadow: 0px 2px 5px #555;
+    line-height:1rem;
+    background-color:rgb(10, 54, 150);
+    border-radius:5px;
+    cursor:pointer;
 }
 
-.editInfo{position:relative;}
-.p-info-icon{position:absolute;font-size:1.5rem;left:-.5rem;}
+.editInfo{position:relative; width:90%;box-shadow: 0px 5px 8px #333;padding:1rem}
+.p-info-icon{position:absolute;font-size:1.5rem;right:.5rem;top:.5rem}
 
 .editInfo .label{
-    font-size:1.2rem;
+    font-size:2rem;
     font-weight:bold;
     text-align:right;
     width:5rem;
-    margin-right:1rem;
+    margin-right:2rem;
 
 }
-.profileinfo{font-size:1.1rem;padding-top:.15rem;}
+.profileinfo{font-size:1.9rem;padding-top:.15rem;}
+
+#commentField{
+    border:none;
+}
+
+#AboutMe textarea{
+    min-height:15rem;
+    max-height:20rem;
+    font-size:1.6rem;
+}
+
+.aboutmeInfo{
+ font-size:1.7rem;
+ line-height:1.6;
+}
+
+.aboutmeEdit{
+
+}

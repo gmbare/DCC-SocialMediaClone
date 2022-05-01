@@ -1,5 +1,5 @@
 .pos-sticky{
-    position:fixed;
+    position:static;
     right:0rem;
     width:25rem;
     /* width:5rem; */
