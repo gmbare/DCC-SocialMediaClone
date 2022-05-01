@@ -14,6 +14,7 @@ const FriendsList = (props) => {
   const [pendingFriendsNames, setPendingFriendsNames] = useState([]);
   const [friendsPicture, setFriendsPictures] = useState([`uploads\\images\\burger.jpg`, `uploads\\images\\burger.jpg`]);
   const [pendingFriendsPictures, setPendingFriendsPictures] = useState([`uploads\\images\\burger.jpg`]);
+  const [friendOnline, setFrendOnline] = useState([]);
 
 
   const getFriends = async () => {
@@ -27,6 +28,8 @@ const FriendsList = (props) => {
         setFriendsNames(friendListNames.data)
         const pictureFrames = await axios.get(`http://localhost:3008/api/users/picfromid`, {params: {"_ids" : friendList.data}})
         setFriendsPictures(pictureFrames.data)
+        const onlineCheck = await axios.get(`http://localhost:3008/api/users/onlinecheckfromid`, {params: {"_ids" : friendList.data}})
+        setFrendOnline(onlineCheck.data)
       })
     } catch (err) {
       console.log(err);
@@ -116,7 +119,17 @@ return (
               <li className="list-group-item fl-avatar" key={index}>
               <div className="d-flex border">
                 <div className="friends w-75">
-                  <img src={`http://localhost:3008/backend/${friendsPicture[index]}`} className="me-2" align="left" />  
+                  {console.log(`http://localhost:3008/backend/${friendsPicture[index]}`)}
+                  <img src={`http://localhost:3008/backend/${friendsPicture[index]}`} className={`rounded-circle me-2 ${function(){
+                    if(friendOnline[index] == "Online"){
+                      console.log("OnlineBorder")
+                      return "onlineborder"
+                    }
+                    else if(friendOnline[index] != "Online"){
+                      console.log("OfflineBorder")
+                      return "offlineborder"
+                    }
+                  }()}`} align="left" />  
                   <div className="pt-2">{friend}</div>
                 </div>
                 <div className="w-25 text-end">
