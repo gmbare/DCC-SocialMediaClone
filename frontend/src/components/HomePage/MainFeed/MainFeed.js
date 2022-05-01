@@ -26,10 +26,10 @@ function MainFeed(props) {
     colorUpdater.map((post) => {
       if (post != ""){
         for (let i = 0; i< 5; i++){
-          document.getElementById(`starL-${i+1}${post.postId}`).className = 'unHighlighted'
+          document.getElementById(`starL-${i+1}${post.postId}`).className = `starlabel unHighlighted`
         }
         for (let i = post.postPost.starRating;i > 0; i--){
-          document.getElementById(`starL-${i}${post.postId}`).className = 'Highlighted'
+          document.getElementById(`starL-${i}${post.postId}`).className = `starlabel Highlighted`
         }
 
       }
