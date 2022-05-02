@@ -93,10 +93,10 @@ const ProfilePage = () => {
               <div className="mt-2 ms-3 editInfo">
                 <div className="p-info-icon"><FaEdit /></div>
                 <div className="d-flex">
-                  <div className="label">Name: </div><div className="profileinfo">{/*NAME GOES HERE*/}</div>
+                  <div className="label">Name: </div><div className="profileinfo">{user.name}</div>
                 </div>
                 <div className="d-flex">
-                  <div className="label">Edit: </div><div className="profileinfo">{/*EMAIL GOES HERE*/}</div>
+                  <div className="label">Edit: </div><div className="profileinfo">{user.email}</div>
                 </div>
               </div>
             </div>
