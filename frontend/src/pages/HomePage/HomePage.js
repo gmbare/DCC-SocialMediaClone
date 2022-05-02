@@ -35,6 +35,7 @@ const HomePage = () => {
           <MainFeed userId={user._id} mFriends={mFriends} />
         </div>
         <div className="w-25 m-5 ps-3 border-start border-dark">
+
           <Link type="button" to="/profile" className="editProfile" state={{userImage : userImage}}> 
             <div className="d-flex">
               <img src={`http://localhost:3008/backend/${userImage}`} className="sm-avatar m-0 ms-2" alt={`image-${user._id}`} state={{userImage : userImage}}/>   
