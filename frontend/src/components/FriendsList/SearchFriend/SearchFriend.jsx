@@ -52,8 +52,7 @@ const SearchFriend = (props) => {
             })         
             }
         </div> 
-    </div> 
-    );
+    </div> );
 }
  
 export default SearchFriend;
