@@ -29,7 +29,7 @@ const HomePage = () => {
   
   return (
     <div className="container">
-      <h1 className="text-left">Home Page for {user.name}</h1>
+      <h1 className="text-left"></h1>
       <div className="container d-flex">
         <MainFeed userId={user._id} mFriends={mFriends} />
         <div className="m-5 ps-3 border-start border-dark pos-sticky">

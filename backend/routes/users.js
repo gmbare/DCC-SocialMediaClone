@@ -12,7 +12,7 @@ const defaultRoute = "http://localhost:3008/backend/"
 
 //* POST register a new user and upload image via middleware
 router.post("/register",
-  fileUpload.single("image"),
+  // fileUpload.single("image"),
   async (req, res) => {
     try {
       const { error } = validateUser(req.body);
@@ -28,7 +28,7 @@ router.post("/register",
         email: req.body.email,
         password: await bcrypt.hash(req.body.password, salt),
         isAdmin: req.body.isAdmin,
-        image: req.file.path
+        // image: req.file.path
       });
 
 
