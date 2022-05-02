@@ -84,7 +84,7 @@ const FriendsList = (props) => {
 
 
 return (
-  <div>
+  <div className="friendborder">
   <div className="">
     <SearchFriend userId={user._id} getPendingFriends={getPendingFriends}/>
   </div>

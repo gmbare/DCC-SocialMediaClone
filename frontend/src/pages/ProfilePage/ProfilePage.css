@@ -2,15 +2,18 @@
     width:125px;
     height:125px;  
     position:relative;  
+    ;
 }
 .lg-avatar img{ 
     clip-path: circle(60px at center);    
 }
 
 .z-i100{
-    z-index: 100;
-    border:.5rem;
-    border-style: dotted;
+    z-index: 250;
+    border: 1rem;
+    
+    
+    
 }
 
 .visible{
@@ -27,10 +30,11 @@
 
 .editIcon{
     font-size:2rem;
-    color:brown;
+    color: brown;
     position:absolute;
     bottom:-5px;
     right:-5px;
+   
 }
 
 .editInfo{position:relative;}
@@ -44,8 +48,66 @@
     margin-right:1rem;
 
 }
-.profileinfo{font-size:1.1rem;padding-top:.15rem;}
+/* .profileinfo{font-size:.1rem;padding-top:.15rem;} */
+
+
+video { 
+    position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 150;
+  max-height: 150;
+  
+  z-index: -100;
+  display: block;
+
+  /* background-size: cover;
+  transition: 1s opacity; */
+}
 
 .bgvideo {
-    background-position: 100%;
+   display: block; 
+}
+
+
+
+.containerabout {
+    width: 100;
+}
+
+
+
+
+.card-container {
+    display: flex;
+    grid-template-columns: repeat(1, 5fr);
+    margin: 1rem;
+    column-gap: 5rem;
+    row-gap: 15rem;
+    
+}
+
+
+
+
+.upload {
+    background-color: rgba(255, 255, 0, 0.801);
+    border: 1px;
+}
+
+.friendborder {
+    border: 3px;
+   
+    
+}
+   
+.home-btn {
+    padding-left: 2%;
+}
+
+.hom {
+    padding: 1.4%;
+    font-size: large;
+    text-decoration: none;
+    
 }
