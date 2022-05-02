@@ -8,15 +8,16 @@
 }
 
 .placement{
-    width:100%;
+    width:20rem;
     /* background-color: white; */
     position: absolute;
-    z-index: 100;
+    z-index: 35;    
+    text-color:black;
 }
 
 .buttonWidth{
     background-color: white;
-width:10rem;
+width:20rem;
 }
 
 .shad-o{
