@@ -281,8 +281,8 @@ router.put("/:ownerId/removefriend/:friendId/list/:list", async (req, res) => {
     let list = req.params.list
     if (list == "pending") {
       // let arr = user.pendingFriends;
-      if (owner.pendingFriends.includes(req.params.friendId)){
-        owner.pendingFriends.splice(owner.pendingFriends.indexOf(req.params.friendId))
+      if (user.pendingFriends.includes(req.params.friendId)){
+        user.pendingFriends.splice(user.pendingFriends.indexOf(req.params.friendId),1)
       }
     } else if (list == "approved") {
       console.log(req.params)
