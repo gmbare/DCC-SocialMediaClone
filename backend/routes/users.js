@@ -281,12 +281,11 @@ router.put("/:ownerId/removefriend/:friendId/list/:list", async (req, res) => {
     let list = req.params.list
     if (list == "pending") {
       // let arr = user.pendingFriends;
-
-      if (user.pendingFriends.includes(req.params.friendId)){
-        console.log(req.params)
-        user.pendingFriends.splice(user.pendingFriends.indexOf(req.params.friendId),1)
+      if (owner.pendingFriends.includes(req.params.friendId)){
+        owner.pendingFriends.splice(owner.pendingFriends.indexOf(req.params.friendId))
       }
     } else if (list == "approved") {
+      console.log(req.params)
       let friend = await User.findById(req.params.friendId)
       if (!friend) return res.status(400).send(`User does not exist!`)
       if (user.friends.includes(req.params.friendId)){
