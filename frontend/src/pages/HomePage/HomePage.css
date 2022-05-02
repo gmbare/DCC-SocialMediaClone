@@ -1,5 +1,5 @@
 .pos-sticky{
-    position:static;
+    position:fixed;
     right:0rem;
     width:25rem;
     /* width:5rem; */
@@ -27,10 +27,10 @@
    }
 
 img.sm-avatar{
-    object-fit: cover;
-    border-radius: 50%;
-    height: 70px;
-    width: 70px;
+    clip-path: circle(33px at center);
+    position:absolute;
+    left:-20px;
+    top:1px
 }
 
 .fit-content{
