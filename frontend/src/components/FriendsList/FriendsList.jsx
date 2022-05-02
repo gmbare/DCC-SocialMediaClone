@@ -85,65 +85,64 @@ const FriendsList = (props) => {
 
 return (
   <div>
-  <div className="">
-    <SearchFriend userId={user._id} getPendingFriends={getPendingFriends}/>
-  </div>
-  <div className="friendslist-placement">
-    <div className="mb-3 border-bottom border-danger mt-4">
-      <h3>Pending Friends</h3>
-      <ul className="list-group list-group-flush text-start border">
-        {pendingFriendsNames.map((pendingFriend, index) => {
-          return (
-            <li className="list-group-item p-0" key={index}>
-              <div className="d-flex">
-                <div className="friends w-75">
-                  <div className="pt-2"><em>{pendingFriend}</em></div>
-                </div>
-                <div className="align-middle w-25 d-flex">
-                  <button className="btn btn-add m-0 pb-1" onClick={((e) => {acceptFriend(e, index)})}><RiAddCircleLine /></button>
-                  <button className="btn btn-del m-0 pb-1" onClick={((e) => {denyFriend(e, index)})}><RiDeleteBin6Line /></button>
-                </div>
-              </div>
-            </li>
-          )
-        })
-        }
-      </ul>
+    <div>
+      <SearchFriend userId={user._id} getPendingFriends={getPendingFriends}/>
     </div>
-    <div className="mb-3 border-bottom border-danger">
-      <h3>Friends List</h3>
-      <div>
-        <ul className="list-group list-group-flush text-start border">
-          {friendsNames.map((friend, index) => {
+    <div className="friendslist-placement">
+      <div className="mb-3 border-bottom border-danger mt-4">
+        <h3>Pending Friends</h3>
+        <ul className="list-group list-group-flush text-start">
+          {pendingFriendsNames.map((pendingFriend, index) => {
             return (
-              <li className="list-group-item fl-avatar" key={index}>
-              <div className="d-flex">
-                <div className="friends w-75">
-                  {console.log(`http://localhost:3008/backend/${friendsPicture[index]}`)}
-                  <img src={`http://localhost:3008/backend/${friendsPicture[index]}`} className={`rounded-circle me-2 ${function(){
-                    if(friendOnline[index] == "Online"){
-                      console.log("OnlineBorder")
-                      return "onlineborder"
-                    }
-                    else if(friendOnline[index] != "Online"){
-                      console.log("OfflineBorder")
-                      return "offlineborder"
-                    }
-                  }()}`} align="left" />  
-                  <div className="pt-2">{friend}</div>
+              <li className="list-group-item p-0 m-0" key={index}>
+                <div className="d-flex border">
+                  <div className="friends flex-grow-1">
+                    <div className="pt-2"><em>{pendingFriend}</em></div>
+                  </div>
+                  <div className="align-middle d-flex">
+                    <button className="btn btn-add" onClick={((e) => {acceptFriend(e, index)})}><RiAddCircleLine /></button>
+                    <button className="btn btn-del" onClick={((e) => {denyFriend(e, index)})}><RiDeleteBin6Line /></button>
+                  </div>
                 </div>
-                <div className="align-middle w-25">
-                  <button className="btn btn-del m-0 pb-1" onClick={((e) => {removeFriend(e, index)})}><RiDeleteBin6Line /></button>
-                </div>
-              </div>  
               </li>
-            );
-          })}
+            )
+          })
+          }
         </ul>
-        <div></div>
+      </div>
+      <div className="mb-3 border-bottom border-danger">
+        <h3>Friends List</h3>
+        <div>
+          <ul className="list-group list-group-flush text-start">
+            {friendsNames.map((friend, index) => {
+              return (
+                <li className="list-group-item fl-avatar p-0 m-0" key={index}>
+                <div className="d-flex border">
+                  <div className="friends w-75">
+                    {console.log(`http://localhost:3008/backend/${friendsPicture[index]}`)}
+                    <img src={`http://localhost:3008/backend/${friendsPicture[index]}`} className={`rounded-circle me-2 ${function(){
+                      if(friendOnline[index] == "Online"){
+                        console.log("OnlineBorder")
+                        return "onlineborder"
+                      }
+                      else if(friendOnline[index] != "Online"){
+                        console.log("OfflineBorder")
+                        return "offlineborder"
+                      }
+                    }()}`} align="left" />  
+                    <div className="pt-2">{friend}</div>
+                  </div>
+                  <div className="w-25 text-end">
+                    <button className="btn btn-del m-0 pb-1" onClick={((e) => {removeFriend(e, index)})}><RiDeleteBin6Line /></button>
+                  </div>
+                </div>  
+                </li>
+              );
+            })}
+          </ul>
         </div>
+      </div>
     </div>
-  </div>
   </div>
 );
 };

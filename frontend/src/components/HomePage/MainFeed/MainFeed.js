@@ -79,41 +79,39 @@ function MainFeed(props) {
   }, [props.mFriends]);
 
   if (props.mFriends != null) {
-    return (
-      <div className="w-75 p-0 m-2">
-        <div align="center">
-          <AddPost userId={props.userId} getPosts={getPosts} />
-          {Post.map((posts, index) => {
-            let avgStars = parseFloat((function () {
-                  let total = 0
-                  for (let i in posts.post.stars){
-                    total += posts.post.stars[i].starRating
-                  }
-                  return (total/posts.post.stars.length)         
-                })()).toFixed(2)
-            return (
-              <div className="postholder p-2 mb-5 border border-warning" key={index}>
-                <div className="d-flex justify-content-between mb-0">
-                  <p className="me-5 mb-0">{posts.name}</p> 
-                  <p className="ms-5 mb-0">{posts.post.dateAdded}</p>
-                  <DeletePost postId = {posts.post._id} ownerId = {posts.post.ownerId} userId={props.userId} getPosts={getPosts} />
+    return (     
+      <div align="center">
+        <AddPost userId={props.userId} getPosts={getPosts} />
+        {Post.map((posts, index) => {
+          let avgStars = parseFloat((function () {
+                let total = 0
+                for (let i in posts.post.stars){
+                  total += posts.post.stars[i].starRating
+                }
+                return (total/posts.post.stars.length)         
+              })()).toFixed(2)
+          return (
+            <div className="postholder p-2 mb-5 border border-warning" key={index}>
+              <div className="d-flex justify-content-between mb-0">
+                <p className="me-5 mb-0">{posts.name}</p> 
+                <p className="ms-5 mb-0">{posts.post.dateAdded}</p>
+                <DeletePost postId = {posts.post._id} ownerId = {posts.post.ownerId} userId={props.userId} getPosts={getPosts} />
+              </div>
+              
+              <div className="imgholder">
+                <Rating postId={posts.post._id} userId={props.userId} getPosts={getPosts} />                 
+                <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
+                <div className="message">
+                    <p>{posts.post.message}</p>
+                    <div className="currentrating">Overall Rating: {avgStars}<FaStar className="icon" /></div>
                 </div>
                 
-                <div>
-                  <Rating postId={posts.post._id} userId={props.userId} getPosts={getPosts} />                 
-                  <img src="../images/burger.jpg" alt={`image-${posts._id}`} />
-                  <div className="message">
-                      <p>{posts.post.message}</p>
-                      <div className="currentrating">Overall Rating: {avgStars}<FaStar className="icon" /></div>
-                  </div>
-                  
-                </div>
               </div>
-            )
-          })
-          }
-        </div>
-      </div>
+            </div>
+          )
+        })
+        }
+      </div>    
     )
   }
   else {
