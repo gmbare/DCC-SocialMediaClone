@@ -14,8 +14,15 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => decodedToken);
   const [isServerError, setIsServerError] = useState(false);
   const navigate = useNavigate();
+  
 
   const registerUser = async (registerData) => {
+    const myData = new FormData();
+    console.log(registerData)
+    myData.append('name', registerData.name)
+    myData.append('email', registerData.email)
+      myData.append('password', registerData.password)
+        myData.append('isAdmin',registerData.isAdmin)
     try {
       let response = await axios.post(`${BASE_URL}/register`, registerData);
       if (response.status === 200) {
@@ -48,8 +55,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
     if (user) {
+      console.log(user)
+      let response = await axios.post(`${BASE_URL}/logout`, user);
       localStorage.removeItem("token");
       setUser(null);
       navigate("/");
@@ -68,3 +77,5 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 };
+
+    

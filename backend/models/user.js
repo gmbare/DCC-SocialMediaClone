@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const { aboutSchema } = require("./aboutMe");
+const { string } = require("joi");
 
 const userSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 5, maxLength: 50 },
@@ -20,7 +21,9 @@ const userSchema = mongoose.Schema({
   friends:{type:[]},
   pendingFriends:{type:[]},
   image:{ type: String, default: "" },
+  online:{type:String, default:"Offline"}
 });
+  
 
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign(
@@ -31,12 +34,13 @@ userSchema.methods.generateAuthToken = function () {
       isAdmin: this.isAdmin,
       friends: this.friends,
       pendingFriends: this.pendingFriends,
-      image: this.image, 
-
-    },
+      image: this.image,
+},
     process.env.JWT_SECRET
   );
 };
+    
+      
  
 const validateUser = (user) => {
   const schema = Joi.object({
@@ -45,9 +49,11 @@ const validateUser = (user) => {
     password: Joi.string().min(5).max(1024).required(),
     isAdmin: Joi.bool().required(),
     image: Joi.string(),
+    online: Joi.string(),
   });
   return schema.validate(user);
 };
+    
 
 const validateLogin = (req) => {
   const schema = Joi.object({
