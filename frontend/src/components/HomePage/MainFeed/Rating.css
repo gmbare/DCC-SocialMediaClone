@@ -5,8 +5,10 @@
 .currentrating{color:gold;font-size:1.25rem;font-weight:bold;position:absolute;top:-3.5rem;right:1rem;background-color: blue;padding:.5rem 1rem}
 .currentrating .icon {margin-top:-.25rem;}
 input[type="radio"]{display:none;}
-label{font-size:1.8rem;color:#fff}
-label:hover{color:gold;}
+.starlabel{font-size:1.8rem;color:#fff;}
+.starlabel:hover{color:gold;}
+/* label{font-size:1.8rem;color:#fff} */
+/* label:hover{color:gold;} */
 
 .Highlighted{
     color: gold;
