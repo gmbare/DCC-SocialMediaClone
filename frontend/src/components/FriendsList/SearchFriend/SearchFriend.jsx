@@ -46,7 +46,7 @@ const SearchFriend = (props) => {
             {searchedFriends.map((entry, index) => {
                 return(
                     <div key={index}>
-                    <button className='buttonWidth' value={entry._id} onClick={(e) => buttonHandler(e)}>{entry.name}</button>
+                    <button className='buttonWidth' value={entry._id} onClick={(e) => buttonHandler(e)}> {entry.name}</button>
                     </div>
                 )
             })         
